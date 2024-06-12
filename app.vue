@@ -32,10 +32,9 @@ footer {
 
   padding: 0.5rem;
   border-radius: 0.5rem;
-  
-  border: 1px solid #FFE6E6;
-  box-shadow: 0 0 10px #FFE6E6;
-  position: relative
-}
 
+  border: 1px solid #ffe6e6;
+  box-shadow: 0 0 10px #ffe6e6;
+  position: relative;
+}
 </style>
