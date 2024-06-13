@@ -1,11 +1,11 @@
 <script setup>
 import { useUserStore } from "@/stores/Users/useUserStore";
 import { useDialogStore } from "@/stores/ui/useDialogStore";
-import Campaign from "@/components/dialogs/wizard/CampaignWiz.vue";
 import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
+import CampaignWiz from "@/components/dialogs/wizard/CampaignWiz.vue";
 import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
 
-const dynamicComponent = shallowRef(Campaign);
+const dynamicComponent = shallowRef(CampaignWiz);
 
 const userStore = useUserStore();
 const { userAuth } = storeToRefs(userStore);
