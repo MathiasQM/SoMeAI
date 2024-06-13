@@ -7,7 +7,7 @@ dotenv.config();
 
 export default defineNuxtConfig({
   telemetry: false,
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   routeRules: {
     "/": { ssr: true },
     "/about": { ssr: true },

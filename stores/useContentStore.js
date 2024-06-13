@@ -1,10 +1,10 @@
 // Imports
 import { defineStore } from "pinia";
 import { ref, computed, onUnmounted } from "vue";
-import { useNuxtApp } from "#app";
 import { getFirestore, collection, doc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useUserStore } from "@/stores/Users/useUserStore";
+import { useNuxtApp } from "#app";
 
 import { usePersonaStore } from "@/stores/content/usePersonaStore.js";
 
@@ -13,7 +13,7 @@ export const useContentStore = defineStore("useContent", () => {
   const firebaseApp = nuxtApp.$firebase.app;
   const db = getFirestore(firebaseApp);
   const functions = getFunctions(firebaseApp);
-  const generateContentFunction = httpsCallable(functions, "generateContent");
+  const generateContent = httpsCallable(functions, "generateContent");
 
   const contentPurpose = ref("");
   const newContentName = ref("");
@@ -150,7 +150,7 @@ export const useContentStore = defineStore("useContent", () => {
     };
 
     try {
-      const content = await generateContentFunction(requestData);
+      const content = await generateContent(requestData);
       console.log("Generated Content:", content);
       selectedSession.value = sessions.value[0];
       newContentName.value = "";
