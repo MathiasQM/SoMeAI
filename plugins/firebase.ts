@@ -8,15 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Your Firebase configuration
 
   const firebaseConfig = config.public.firebase as FirebaseConfig;
-  // Log the firebaseConfig to ensure it is being loaded correctly
-  console.log("Firebase apiKey:", config.public.firebase.apiKey);
-  console.log("Firebase authDomain:", config.public.firebase.authDomain);
-  console.log("Firebase projectId:", config.public.firebase.projectId);
-  console.log("Firebase storageBucket:", config.public.firebase.storageBucket);
-  console.log("Firebase messagingSenderId:", config.public.firebase.messagingSenderId);
-  console.log("Firebase appId:", config.public.firebase.appId);
-  console.log("Firebase measurementId:", config.public.firebase.measurementId);
-  console.log("Firebase Config:", firebaseConfig);
+  console.log(firebaseConfig);
 
   // Initialize Firebase
   let firebaseApp: FirebaseApp;
