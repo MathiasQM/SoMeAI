@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import { FirebaseConfig } from "./types/firebase";
 
 dotenv.config();
-console.log("FIREBASE_API_KEY:", process.env.NUXT_PUBLIC_FIREBASE_API_KEY);
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -24,13 +23,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       firebase: {
-        apiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY as string,
-        authDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN as string,
-        projectId: process.env.NUXT_PUBLIC_FIREBASE_PROJECT_ID as string,
-        storageBucket: process.env.NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET as string,
-        messagingSenderId: process.env.NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID as string,
-        appId: process.env.NUXT_PUBLIC_FIREBASE_APP_ID as string,
-        measurementId: process.env.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID as string,
+        apiKey: "",
+        authDomain: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+        measurementId: "",
       } as FirebaseConfig,
     },
   },
