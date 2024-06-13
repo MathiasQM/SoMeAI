@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import NewContent from "@/components/dialogs/wizard/NewContent.vue";
+import NewContent from "@/components/dialogs/Wizard/NewContent.vue";
 import { useGloabalState } from "@/stores/ui/useGlobalState";
 import { usePersonaStore } from "@/stores/content/usePersonaStore";
 import { useDialogStore } from "@/stores/ui/useDialogStore";
 import { useUserStore } from "@/stores/Users/useUserStore";
 
-// Component name as string for dynamic rendering
 const useGloabalStateStore = useGloabalState();
 const { loading } = storeToRefs(useGloabalStateStore);
 const dynamicComponent = shallowRef(NewContent);
