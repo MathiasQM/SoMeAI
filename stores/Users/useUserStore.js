@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore"; // Ensure Firestore is correctly imported
-import { useFirestore } from "vuefire";
+import { getFirestore, doc, getDoc } from "firebase/firestore"; // Ensure Firestore is correctly imported
 
 export const useUserStore = defineStore("userStore", () => {
   const auth = getAuth();
@@ -10,7 +9,7 @@ export const useUserStore = defineStore("userStore", () => {
   const userAuth = ref(false);
   const loading = ref(false);
   const error = ref(null);
-  const db = useFirestore();
+  const db = getFirestore();
 
   const userCredentials = ref({
     email: "",

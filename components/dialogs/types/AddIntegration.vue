@@ -1,0 +1,143 @@
+<script setup>
+const props = defineProps({
+    title: {
+        type: String,
+        required: true,
+        default: ''
+    },
+    data: {
+        type: Object,
+        required: true,
+        default: () => ({})
+    },
+})
+
+const integrations= ref([
+    {
+        platform: 'Twitter',
+        handle: 'Twitter handle',
+        isActive: false,
+        id: '1'
+    },
+    {
+        platform: 'Facebook',
+        handle: 'Facebook handle',
+        isActive: false,
+        id: '2'
+    },
+    {
+        platform: 'Instagram',
+        handle: 'Instagram handle',
+        isActive: true,
+        id: '3'
+    },
+    {
+        platform: 'LinkedIn',
+        handle: 'LinkedIn handle',
+        isActive: false,
+        id: '4'
+    },
+    {
+        platform: 'YouTube',
+        handle: 'YouTube handle',
+        isActive: false,
+        id: '5'
+    },
+    {
+        platform: 'TikTok',
+        handle: 'TikTok handle',
+        isActive: false,
+        id: '6'
+    },
+    {
+        platform: 'Pinterest',
+        handle: 'Pinterest handle',
+        isActive: false,
+        id: '7'
+    },
+    {
+        platform: 'Snapchat',
+        handle: 'Snapchat handle',
+        isActive: false,
+        id: '8'
+    },
+    {
+        platform: 'Reddit',
+        handle: 'Reddit handle',
+        isActive: false,
+        id: '9'
+    },
+    {
+        platform: 'Tumblr',
+        handle: 'Tumblr handle',
+        isActive: false,
+        id: '10'
+    },
+    {
+        platform: 'WhatsApp',
+        handle: 'WhatsApp handle',
+        isActive: false,
+        id: '11'
+    },
+    {
+        platform: 'Telegram',
+        handle: 'Telegram handle',
+        isActive: false,
+        id: '12'
+    },
+    {
+        platform: 'Signal',
+        handle: 'Signal handle',
+        isActive: false,
+        id: '13'
+    },
+    {
+        platform: 'Slack',
+        handle: 'Slack handle',
+        isActive: false,
+        id: '14'
+    },
+    {
+        platform: 'Discord',
+        handle: 'Discord handle',
+        isActive: false,
+        id: '15'
+    },
+    {
+        platform: 'Twitch',
+        handle: 'Twitch handle',
+        isActive: false,
+        id: '16'
+    },
+    {
+        platform: 'Spotify',
+        handle: 'Spotify handle',
+        isActive: false,
+        id: '17'
+    },
+])
+</script>
+
+
+<template>
+    <div>
+
+        <div class="transition-all border-b border-creme dark:border-lightdark  p-5 flex items-center gap-5">
+            <NuxtIcon name="Add" filled class="transition-all text-purple-dark text-2xl" />
+            <input type="search" class="transition-all text-lightgrey w-full dark:bg-darkgrey" placeholder="Search integrations">
+        </div>
+        
+        <div class="p-5 flex flex-col gap-3 overflow-y-scroll h-[400px]">
+            <p class="transition-all text-lightgrey">Add an integration</p>
+            <div class="grid grid-cols-2 gap-2">
+                <div v-for="channel, i in integrations" :key="channel + i" class="transition-all flex gap-2 items-center justify-between border border-creme px-2 py-4 rounded-md hover:border-purple-dark cursor-pointer">
+                    <NuxtIcon :name="channel.platform" filled/>
+                    <p class="text-xsmall font-medium">{{ channel.platform }}</p>
+                    <FormsSwitch v-model="channel.isActive" />
+                    <!-- @click.stop="updateIntegrationInFirebase" -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</template>
