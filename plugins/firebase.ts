@@ -8,6 +8,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Your Firebase configuration
 
   const firebaseConfig = config.public.firebase as FirebaseConfig;
+  // Log the firebaseConfig to ensure it is being loaded correctly
+  console.log("Firebase Config:", firebaseConfig);
 
   // Initialize Firebase
   let firebaseApp: FirebaseApp;
