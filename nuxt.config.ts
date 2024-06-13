@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
+import dotenv from "dotenv";
 import { FirebaseConfig } from "./types/firebase";
+
+dotenv.config();
+console.log("FIREBASE_API_KEY:", process.env.NUXT_PUBLIC_FIREBASE_API_KEY);
 
 export default defineNuxtConfig({
   telemetry: false,
