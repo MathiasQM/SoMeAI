@@ -12,7 +12,8 @@
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"],
-      "nuxt/app": ["./node_modules/nuxt/dist/app"]
+      "#app": ["./node_modules/nuxt/dist/app"], // Ensuring correct alias for #app
+      "@nuxt/types": ["./node_modules/nuxt/dist/app"] // Ensuring correct alias for #app
     },
     "types": ["@types/node", "@nuxt/types", "@pinia/nuxt"]
   },

@@ -16,8 +16,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  plugins: [
-    { src: "~/plugins/firebase.ts", ssr: false },
-    { src: "~/plugins/Quill.client.ts", ssr: false },
-  ],
+  // plugins: [
+  //   { src: "~/plugins/firebase.ts", ssr: false },
+  //   { src: "~/plugins/Quill.client.ts", ssr: false },
+  // ],
 });
