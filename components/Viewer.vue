@@ -76,7 +76,6 @@ const route = useRoute();
       <div class="bg-white border border-light-100 w-24 h-24 rounded-md flex justify-center items-center">
         <UiLargeLoader />
       </div>
-      s
     </div>
     <!-- <div v-if="route.path === '/contentai'" :class="showWizard ? 'opacity-50' : ''" class="absolute left-0 bottom-5 flex w-full justify-center items-center overflow-hidden">
             <input :disabled="showWizard" @keydown.enter="generateContent" type="text" v-model="userInput"  class="disabled:bg-white w-[calc(100vw-70px)] md:w-[calc(100%-40px)] rounded-lg min-h-16 h-auto pl-5 dark:bg-darkgrey dark:text-white dark:placeholder:text-white border border-light-100 focus:outline-purple-dark" placeholder="Input a topic or leave it blank to generate a random topic">
