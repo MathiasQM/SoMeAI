@@ -1,7 +1,7 @@
 <script setup>
 import { useUserStore } from "@/stores/Users/useUserStore";
 import { useDialogStore } from "@/stores/ui/useDialogStore";
-import Campaign from "@/components/dialogs/wizard/Campaign.vue";
+import Campaign from "@/components/dialogs/wizard/CampaignWiz.vue";
 import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
 import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
 
