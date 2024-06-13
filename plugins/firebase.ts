@@ -1,5 +1,6 @@
 import { defineNuxtPlugin, useRuntimeConfig } from "#app";
-import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import type { FirebaseApp } from "firebase/app";
 import { FirebaseConfig } from "../types/firebase";
 
 export default defineNuxtPlugin((nuxtApp) => {
