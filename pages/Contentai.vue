@@ -1,8 +1,8 @@
 <script setup>
 import { useUserStore } from "@/stores/Users/useUserStore";
 import { useDialogStore } from "@/stores/ui/useDialogStore";
+import CampaignWiz from "~/components/dialogs/Wizard/CampaignWiz.vue";
 import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
-import CampaignWiz from "@/components/dialogs/wizard/CampaignWiz.vue";
 import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
 
 const dynamicComponent = shallowRef(CampaignWiz);
