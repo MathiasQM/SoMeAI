@@ -1,4 +1,5 @@
-# Settings for Cloud Run
+# apphosting.yaml
+
 runConfig:
   minInstances: 2
   maxInstances: 100
@@ -6,46 +7,45 @@ runConfig:
   cpu: 2
   memoryMiB: 1024
 
-# Environment variables and secrets
 env:
   - variable: NUXT_PUBLIC_FIREBASE_API_KEY
-    value: firebase_api_key_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
+    secret: firebase_api_key_secret
+    availability:
+      - BUILD
+      - RUNTIME
 
   - variable: NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-    value: firebase_auth_domain_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
-
-  - variable: NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-    value: firebase_storage_bucket_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
-
-  - variable: NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
-    value: firebase_messaging_sender_id_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
-
-  - variable: NUXT_PUBLIC_FIREBASE_APP_ID
-    value: firebase_app_id_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
-
-  - variable: NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    value: firebase_measurement_id_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
+    secret: firebase_auth_domain_secret
+    availability:
+      - BUILD
+      - RUNTIME
 
   - variable: NUXT_PUBLIC_FIREBASE_PROJECT_ID
-    value: firebase_project_id_secret
-        availability:
-        -   BUILD
-        -   RUNTIME
+    secret: firebase_project_id_secret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    secret: firebase_storage_bucket_secret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    secret: firebase_messaging_sender_id_secret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NUXT_PUBLIC_FIREBASE_APP_ID
+    secret: firebase_app_id_secret
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    secret: firebase_measurement_id_secret
+    availability:
+      - BUILD
+      - RUNTIME
