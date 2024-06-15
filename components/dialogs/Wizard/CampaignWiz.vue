@@ -16,7 +16,6 @@ const availableChannels = ref({
   LinkedIn: "LinkedIn",
   Threads: "Threads",
   X: "X",
-  Threads: "Threads",
   "Blog Post": "Blog Post",
   // Email: "Email",
 });
