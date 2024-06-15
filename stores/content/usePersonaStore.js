@@ -2,11 +2,13 @@
 import { defineStore, storeToRefs } from "pinia";
 import { useGloabalState } from "@/stores/ui/useGlobalState";
 import { useUserStore } from "@/stores/Users/useUserStore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 import { ref, watch, computed } from "vue";
 import { fetchPersonasFromFirestore, deletePersonaById, createPersonaRemote } from "../../lib/personaHelpers.js";
 
 export const usePersonaStore = defineStore("personaStore", () => {
+  const db = getFirestore();
   const userStore = useUserStore();
   const { userAuth } = storeToRefs(userStore);
 
@@ -21,8 +23,20 @@ export const usePersonaStore = defineStore("personaStore", () => {
   const fetchPersonas = async () => {
     try {
       const fetchedPersonas = await fetchPersonasFromFirestore(userAuth.value?.uid);
-      if (fetchedPersonas) {
-        personas.value = fetchedPersonas;
+      const updatedPersonas = [];
+
+      for (const persona of fetchedPersonas) {
+        const integrationsRef = collection(db, "Personas", persona.personaId, "Integrations");
+        const integrationsSnapshot = await getDocs(integrationsRef);
+
+        const integrations = integrationsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+        // Update the persona object with the integrations
+        updatedPersonas.push({ ...persona, integrations });
+      }
+
+      if (updatedPersonas.length > 0) {
+        personas.value = updatedPersonas;
         localStorage.setItem("Personas", JSON.stringify(personas.value));
       } else {
         personas.value = [];

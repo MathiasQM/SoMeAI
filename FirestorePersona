@@ -8,16 +8,31 @@
       "Keeping up with changing marketing trends",
       "Finding humor and joy in the tech-driven world"
     ],
-    "contentPreferences": ["User-Centric Design"],
+    "contentPreferences": [
+      "User-Centric Design"
+    ],
     "demographics": {
-      "ageRange": ["20", "55"],
+      "ageRange": [
+        "20",
+        "55"
+      ],
       "behaviors": [
         "Frequent social media users",
         "Enjoys experimenting with new tools."
       ],
-      "gender": ["Male", "Female"],
-      "geographicalLocations": ["Denmark", "Canada"],
-      "professions": ["Digital Marketers", "Content Creators", "Brand managers"],
+      "gender": [
+        "Male",
+        "Female"
+      ],
+      "geographicalLocations": [
+        "Denmark",
+        "Canada"
+      ],
+      "professions": [
+        "Digital Marketers",
+        "Content Creators",
+        "Brand managers"
+      ],
       "descriptor": "Professionals in marketing, especially in industries that value creativity and engagement"
     },
     "goals": [
@@ -77,6 +92,7 @@
         "description": "We use humor wisely to make our interactions delightful but never at the expense of clarity or respect."
       }
     ],
+    "pointOfView": "First Person",
     "doAndDont": {
       "donts": [
         "Use jargon or technical language that might confuse the user.",
@@ -95,7 +111,11 @@
     }
   },
   "contentPreferences": {
-    "tags": ["FunWithAI", "MarketingJoy", "AIForAll"],
+    "tags": [
+      "FunWithAI",
+      "MarketingJoy",
+      "AIForAll"
+    ],
     "description": "BrandBrainAI crafts user-centric AI solutions designed to streamline and enhance digital marketing efforts with a touch of humor and warmth, making technology accessible and enjoyable for marketers of all levels."
   }
 }

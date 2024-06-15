@@ -46,6 +46,7 @@ const showContentTools = computed(() => {
 
 <template>
   <div
+    v-if="isEditorNav"
     class="absolute z-10 mx-5 mt-2 w-[calc(100vw-70px)] md:w-[calc(100%-40px)] h-[70px] rounded-md px-5 flex items-center justify-between"
   >
     <template v-if="!isEditorNav">

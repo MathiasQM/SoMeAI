@@ -1,6 +1,6 @@
 // Import your custom functions
-import { generateContent } from "./services/chatGPT/generateContent.js";
-import { createPersona } from "./persona/generate/createPersona.js";
+import { onPersonaCreateOrUpdate } from "./personas/constructPersonaDescription.js";
+import { onIntegrationCreateOrUpdate } from "./personas/constructPostDescription.js";
 
 // Export your custom functions
-export { generateContent, createPersona };
+export { onPersonaCreateOrUpdate, onIntegrationCreateOrUpdate };

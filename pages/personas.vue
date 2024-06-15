@@ -135,14 +135,13 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
     </div>
     <div v-if="persona" class="w-full h-full rounded-lg p-5">
       <div
-        class="h-[calc(84vh)] lg:overflow-hidden overflow-y-scroll flex flex-col lg:flex-row items-center lg:items-start gap-5"
+        class="h-full lg:overflow-hidden overflow-y-scroll flex flex-col lg:flex-row items-center lg:items-start gap-5"
       >
         <div class="w-full lg:max-w-[200px]">
           <!-- Side Menu -->
           <div
             class="transition-all text-xsmall font-bold p-4 rounded-lg bg-white border border-light-100 flex-grow flex lg:flex-col gap-3 select-none w-[calc(100vw-40px)] md:w-[calc(100%-0px)] overflow-x-scroll mb-5"
           >
-            <p class="hidden md:block text-xsmall mb-2">Sections</p>
             <p
               @click="section = 'General'"
               :class="section === 'General' ? 'bg-purple-100 text-purple-600' : ''"
@@ -150,7 +149,6 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
             >
               General
             </p>
-            <!-- <p @click="section = 'Channels'" :class="section === 'Channels' ? 'bg-purple-100 text-purple-600' : ''" class="transition-all cursor-pointer whitespace-nowrap hover:bg-purple-100 hover:text-purple-600 text-small pl-3 p-1 rounded-md">Channels</p> -->
             <p
               @click="section = 'Target Audience'"
               :class="section === 'Target Audience' ? 'bg-purple-100 text-purple-600' : ''"
@@ -172,43 +170,13 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
             >
               Tone of Voice
             </p>
-          </div>
-
-          <div
-            class="transition-all text-xsmall font-bold p-4 rounded-lg bg-white border border-light-100 flex-grow flex flex-col gap-3 select-none w-[calc(100vw-40px)] md:w-[calc(100%-0px)]"
-          >
-            <p class="text-xsmall mb-2">Options</p>
-            <DialogsConfirmation
-              context="Viewer"
-              :buttons="{ cancel: { text: 'Cancel' }, confirm: { text: 'Generate' } }"
-              @confirm="personaStore.createPersona(userProvidedData)"
+            <p
+              @click="section = 'Writing Style'"
+              :class="section === 'Writing Style' ? 'bg-purple-100 text-purple-600' : ''"
+              class="transition-all cursor-pointer whitespace-nowrap hover:bg-purple-100 hover:text-purple-600 text-small px-3 p-1 rounded-md"
             >
-              <template #Button>
-                <button class="text-white bg-purple-500 px-4 py-2 rounded-md w-full">Re-generate</button>
-              </template>
-              <template #Text>
-                <p class="text-small">
-                  Are you sure that you'd like to overwrite your <strong>{{ persona.personaName }}</strong> persona by
-                  re-generating? Your current progress will be lost.
-                </p>
-              </template>
-            </DialogsConfirmation>
-            <DialogsConfirmation
-              context="Viewer"
-              :buttons="{ cancel: { text: 'Cancel' }, confirm: { text: 'Delete' } }"
-              @confirm="personaStore.deletePersona(persona.personaId)"
-            >
-              <template #Button>
-                <button class="text-white bg-red px-4 py-2 rounded-md w-full">Delete</button>
-              </template>
-              <template #Text>
-                <p class="text-small">
-                  Are you sure you'd like to delete your <strong>{{ persona.personaName }}</strong> persona, your
-                  current progress will be lost?
-                </p>
-                <p class="text-small">Note: Dette bør også at slette alt content lavet med dette persona!</p>
-              </template>
-            </DialogsConfirmation>
+              Writing Style
+            </p>
           </div>
         </div>
 
@@ -222,21 +190,20 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
             <!-- Genetal Section -->
             <PersonasSection v-if="section === 'General'" title="General" description="General settings.">
               <template #body>
-                <div class="w-full gap-4 flex flex-col">
-                  <div class="grid md:grid-cols-4 w-full gap-5">
-                    <p class="text-small">{{ persona.personaName }}</p>
-                    <p class="text-small">{{ persona.website }}</p>
-                  </div>
-                  <p class="text-small">{{ persona.description }}</p>
-                  <div class="flex flex-wrap justify-center self-center gap-1 w-2/3">
-                    <!-- <DialogsGeneric type="tagManager" context="Viewer" :data="{tags: persona.contentPreferences.tags, personaId: persona.personaId, identifier: 'contentPreferences', placeholder: 'Add a tag'}" @update:data="persona.contentPreferences.tags = $event.tags">
-                                                <div class="flex flex-wrap justify-center gap-1">
-                                                    <div class="transition-all flex gap-1 cursor-pointer rounded-md group">
-                                                        <p v-for="tag in persona.contentPreferences.tags" class="transition-all bg-purple-100 text-purple-600 group-hover:bg-purple-400 group-hover:text-white px-2 py-1 rounded-md text-xsmall whitespace-nowrap">#{{ tag }}</p>
-                                                    </div>
-                                                </div>
-                                            </DialogsGeneric> -->
-                  </div>
+                <p>Note Virker ikke endu:</p>
+                <div class="w-full gap-4 flex justify-between">
+                  <FormsInputText
+                    name="personaName"
+                    label="Persona Name"
+                    class="text-small w-full"
+                    v-model="persona.personaName"
+                  />
+                  <FormsInputText
+                    name="website"
+                    label="Website"
+                    class="text-small w-full"
+                    v-model="persona.website"
+                  ></FormsInputText>
                 </div>
               </template>
             </PersonasSection>
@@ -268,6 +235,47 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
                 </div>
               </template>
             </PersonasSection>
+
+            <div
+              v-if="section === 'General'"
+              class="transition-all text-xsmall font-bold p-4 rounded-lg bg-white border border-light-100 flex flex-col gap-3 select-none w-[calc(100vw-40px)] md:w-[calc(100%-0px)]"
+            >
+              <p class="text-xsmall mb-2">Options</p>
+              <DialogsConfirmation
+                context="Viewer"
+                :buttons="{ cancel: { text: 'Cancel' }, confirm: { text: 'Generate' } }"
+                @confirm="personaStore.createPersona(userProvidedData)"
+              >
+                <template #Button>
+                  <button class="text-white bg-purple-500 px-4 py-2 rounded-md w-full">Re-generate</button>
+                </template>
+                <template #Text>
+                  <p class="text-small">
+                    Are you sure that you'd like to overwrite your <strong>{{ persona.personaName }}</strong> persona by
+                    re-generating? Your current progress will be lost. Type "Generate persona and delete content" to
+                    confirm.
+
+                    <br><br> <p>Note:Dette generer lige nu en ny, og sletter ikke det gamle</p>
+                  </p>
+                </template>
+              </DialogsConfirmation>
+              <DialogsConfirmation
+                context="Viewer"
+                :buttons="{ cancel: { text: 'Cancel' }, confirm: { text: 'Delete' } }"
+                @confirm="personaStore.deletePersona(persona.personaId)"
+              >
+                <template #Button>
+                  <button class="text-white bg-red px-4 py-2 rounded-md w-full">Delete</button>
+                </template>
+                <template #Text>
+                  <p class="text-small">
+                    Are you sure you'd like to delete your <strong>{{ persona.personaName }}</strong> persona, your
+                    current progress will be lost? Type "Delete persona and it's content" to confirm.
+                  </p>
+                  <p class="text-small">Note: Dette bør også at slette alt content lavet med dette persona!</p>
+                </template>
+              </DialogsConfirmation>
+            </div>
 
             <!-- Target Auidence Section -->
             <PersonasSection
@@ -499,21 +507,33 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
                   </div>
                 </div>
                 <PersonasDoAndDont :persona="persona" />
+              </template>
+            </PersonasSection>
+            <PersonasSection
+              v-if="section === 'Writing Style'"
+              title="Writing Style"
+              description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio vitae, eius sapiente repellat quae inventore reprehenderit id obcaecati, voluptates officia corrupti at? Ipsam praesentium vel hic, obcaecati totam amet atque."
+            >
+              <template #body>
+                <div class="w-full flex flex-col gap-2">
+                  <p class="text-xsmall text-lighterdark font-normal lg:max-w-[100%] mdxl:max-w-[50%] xl:max-w-[100%]">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. NOTE: Sentence length og EmojiUse Skal
+                    flyttes til "Writing Style" i firebase NOTE: Skal dette kontrolleres pr. platform? (Instagram,
+                    Facebook, LinkedIn, etc.)
+                  </p>
+                </div>
                 <div class="flex flex-wrap">
-                  <p>Sentence Length</p>
                   <FormsInputText
                     v-model="persona.toneOfVoice.communicationPreferences.sentenceLength"
                     label="Sentence length"
                   />
-
-                  <p>Emoji use</p>
                   <FormsInputText v-model="persona.toneOfVoice.communicationPreferences.emojiUse" label="Empoji use" />
-
-                  <p>
-                    Writing Style (What point of view is it written from, first or third person, personal stories and
-                    anekdotes, formal, casual, conversational, relatablility)
-                  </p>
-                  <FormsInputText v-model="persona.toneOfVoice.communicationPreferences.emojiUse" label="Empoji use" />
+                  <FormsInputText v-model="persona.writingStyle.formality" label="Formality" />
+                  <FormsInputText v-model="persona.writingStyle.anecdotes" label="Anecdotes" />
+                  <FormsInputText v-model="persona.writingStyle.personalStories" label="Personal Stories" />
+                  <FormsInputText v-model="persona.writingStyle.pointOfView" label="Point Of View" />
+                  <FormsInputText v-model="persona.writingStyle.relatability" label="Relateability" />
+                  <FormsInputText v-model="persona.writingStyle.tone" label="Tone" />
                 </div>
               </template>
             </PersonasSection>

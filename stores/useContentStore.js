@@ -150,11 +150,19 @@ export const useContentStore = defineStore("useContent", () => {
     };
 
     try {
-      const content = await generateContent(requestData);
-      console.log("Generated Content:", content);
-      selectedSession.value = sessions.value[0];
+      const { success, data, error } = await useFetch("/api/users/content/generate", {
+        method: "POST",
+        body: requestData,
+      });
+
+      console.log(success, data, error);
+
+      selectedSession.value = sessions.value[0]; // Set the selected session to the first session - Should be the newly created session
       newContentName.value = "";
       contentPurpose.value = "";
+
+      if (!success) throw new Error("Failed to create persona");
+      return data.json();
     } catch (error) {
       console.error("Error generating content:", error);
     }
