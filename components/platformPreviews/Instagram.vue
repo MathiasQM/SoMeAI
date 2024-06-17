@@ -105,7 +105,7 @@ watch(
         <div class="text-xsmall">
           <p class="font-bold">{{ selectedPersona.personaName }}</p>
           <p class="bg-purple-100 text-purple-500 font-medium py-[1px] px-[2px] rounded-sm flex items-center gap-1">
-            <NuxtIcon name="AI" />Scheduled for: Dec. 24th at 12:00 AM
+            <NuxtIcon name="AI" />Scheduled for: {{ result.post_time }}
           </p>
         </div>
         <div class="absolute right-5 flex items-center gap-5">
