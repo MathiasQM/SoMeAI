@@ -11,9 +11,9 @@ async function getSecret(secretName) {
 }
 
 async function initializeAppWithSecrets() {
-  const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
-  const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
-  const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
+  const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID");
+  const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL");
+  const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY");
   const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
 
   console.log("Fetched PROJECT_ID:", projectId);
