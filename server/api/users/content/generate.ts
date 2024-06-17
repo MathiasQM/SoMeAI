@@ -24,9 +24,9 @@ export default defineEventHandler(async (event) => {
 
   return {
     openaiApiKey: config.public.openai.apiKey,
-    projectId: config.serviceAccount.projectId,
-    clientEmai: config.serviceAccount.clientEmail,
-    privateKey: config.serviceAccount.privateKey,
+    projectId: config.firebaseProjectId,
+    clientEmai: config.firebaseClientEmail,
+    privateKey: config.firebasePrivateKey,
   };
 
   const { admin, db } = await getFirebaseAdminInstance();
