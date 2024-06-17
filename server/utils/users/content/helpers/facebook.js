@@ -1,7 +1,8 @@
-import { admin, db } from "../../../../firebaseAdminConfig"; // Adjust the path as necessary
+import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
 
 // Helper function for Facebook
 export async function formatForFacebook(persona, personaDescription, userInput) {
+  const { db } = await getFirebaseAdminInstance();
   let responseStructure = {
     content: "",
     hashtags: [],

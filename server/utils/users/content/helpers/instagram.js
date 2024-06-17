@@ -1,6 +1,7 @@
-import { admin, db } from "../../../../firebaseAdminConfig"; // Adjust the path as necessary
+import { getFirebaseAdminInstance } from "../../../../firebaseAdminConfig"; // Adjust the path as necessary
 // Helper function for Instagram
 export async function formatForInstagram(persona, personaDescription, userInput) {
+  const { db } = await getFirebaseAdminInstance();
   let responseStructure = {
     content: "",
     caption: "",
