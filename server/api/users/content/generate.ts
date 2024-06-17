@@ -7,7 +7,7 @@ import { PassThrough } from "stream";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
 const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: config.private.openai.apiKey,
+  apiKey: config.public.openai.apiKey,
 });
 
 const corsOptions = {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
 
   return {
-    openaiApiKey: config.private.openai.apiKey,
+    openaiApiKey: config.public.openai.apiKey,
     projectId: config.private.serviceAccount.projectId,
     clientEmai: config.private.serviceAccount.clientEmail,
     privateKey: config.private.serviceAccount.privateKey,

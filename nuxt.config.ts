@@ -22,6 +22,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      openai: {
+        apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
+      },
       firebase: {
         apiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
         authDomain: process.env.NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -33,9 +36,6 @@ export default defineNuxtConfig({
       } as FirebaseConfig,
     },
     private: {
-      openai: {
-        apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
-      },
       serviceAccount: {
         projectId: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_PROJECT_ID,
         clientEmail: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_CLIENT_EMAIL,
