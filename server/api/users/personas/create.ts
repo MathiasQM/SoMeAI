@@ -4,8 +4,6 @@ import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
 
-const { admin, db } = getFirebaseAdminInstance();
-
 // Configure OpenAI client
 const openai = new OpenAI({
   apiKey: useRuntimeConfig().public.OPENAI_API_KEY as string,
@@ -19,7 +17,8 @@ const corsOptions = {
 
 const corsHandler = createCorsHandler(corsOptions);
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
+  const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
 

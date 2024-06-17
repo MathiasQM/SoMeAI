@@ -6,8 +6,6 @@ import { formatForFacebook } from "../../../utils/users/content/helpers/facebook
 import { PassThrough } from "stream";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
 
-const { admin, db } = await getFirebaseAdminInstance();
-
 // Configure OpenAI client
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY as string,
@@ -23,6 +21,7 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
+  const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
   const stream = new PassThrough();
