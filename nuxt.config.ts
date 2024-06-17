@@ -41,6 +41,7 @@ export default defineNuxtConfig({
         clientEmail: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_CLIENT_EMAIL,
         privateKey: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_PRIVATE_KEY,
       },
+    },
   },
   plugins: [
     { src: "~/plugins/firebase.ts", ssr: false },
