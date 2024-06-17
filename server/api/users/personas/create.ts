@@ -2,7 +2,9 @@
 import { defineEventHandler, createError, readBody } from "h3";
 import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
-import { db } from "../../../firebaseAdminConfig.js";
+import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+
+const { admin, db } = getFirebaseAdminInstance();
 
 // Configure OpenAI client
 const openai = new OpenAI({
