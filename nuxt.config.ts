@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   routeRules: {
     "/": { ssr: true },
-    "/about": { ssr: true },
+    "/personas": { ssr: true },
   },
   css: ["~/assets/styles/tailwind.css"],
   modules: ["nuxt-icons", "@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/nuxt"],
