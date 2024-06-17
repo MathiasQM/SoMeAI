@@ -1,20 +1,46 @@
 import admin from "firebase-admin";
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
-const config = useRuntimeConfig();
+const client = new SecretManagerServiceClient();
 
-const serviceAccount = {
-  projectId: config.private.serviceAccount.projectId,
-  clientEmail: config.private.serviceAccount.clientEmail,
-  privateKey: config.private.serviceAccount.privateKey.replace(/\\n/g, "\n"),
-};
-
-// Initialize the Firebase Admin SDK using the service account
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+async function getSecret(secretName) {
+  const [version] = await client.accessSecretVersion({
+    name: secretName,
   });
+  return version.payload.data.toString();
 }
 
-const db = admin.firestore();
+async function initializeAppWithSecrets() {
+  const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID");
+  const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL");
+  const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY");
+  const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
 
-export { admin, db };
+  console.log("Fetched PROJECT_ID:", projectId);
+  console.log("Fetched CLIENT_EMAIL:", clientEmail);
+  console.log("Fetched and formatted PRIVATE_KEY:", privateKey ? "Exists" : "Does not exist");
+
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId: projectId,
+        clientEmail: clientEmail,
+        privateKey: privateKey,
+      }),
+    });
+  }
+
+  const db = admin.firestore();
+  return { admin, db };
+}
+
+let firebaseAdminInstance = null;
+
+async function getFirebaseAdminInstance() {
+  if (!firebaseAdminInstance) {
+    firebaseAdminInstance = await initializeAppWithSecrets();
+  }
+  return firebaseAdminInstance;
+}
+
+export { getFirebaseAdminInstance };
