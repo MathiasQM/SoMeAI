@@ -3,10 +3,9 @@ import { defineEventHandler, createError, readBody } from "h3";
 import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
-
-// Configure OpenAI client
+const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: useRuntimeConfig().public.OPENAI_API_KEY as string,
+  apiKey: config.public.openai.apiKey,
 });
 
 const corsOptions = {
