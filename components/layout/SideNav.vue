@@ -103,7 +103,7 @@ const handleSubmenu = (purpose) => {
         >
           <NuxtIcon name="Content" filled />Content
         </button>
-        <button
+        <!-- <button
           @click="handleSubmenu('Campaign')"
           class="transition-all cursor-pointer text-small text-light-700 hover:text-purple-600 hover:bg-purple-100 rounded-md py-1 px-4 flex items-center gap-3"
         >
@@ -114,7 +114,7 @@ const handleSubmenu = (purpose) => {
           class="transition-all cursor-pointer text-small text-light-700 hover:text-purple-600 hover:bg-purple-100 rounded-md py-1 px-4 flex items-center gap-3"
         >
           <NuxtIcon name="Bolt" filled />Automations
-        </button>
+        </button> -->
       </div>
 
       <!-- Submenu Sidebar -->
