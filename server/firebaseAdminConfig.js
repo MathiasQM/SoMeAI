@@ -1,32 +1,43 @@
 import admin from "firebase-admin";
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
-// Ensure the private key is properly formatted
-const privateKey = process.env.SERVICE_ACCOUNT_PRIVATE_KEY
-  ? process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n")
-  : null;
+const client = new SecretManagerServiceClient();
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
-      clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
-      privateKey: privateKey,
-    }),
+async function getSecret(secretName) {
+  const [version] = await client.accessSecretVersion({
+    name: secretName,
   });
+  return version.payload.data.toString();
 }
 
-const db = admin.firestore();
+async function initializeAppWithSecrets() {
+  try {
+    const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
+    const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
+    const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
+    const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
 
-export { admin, db };
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: projectId,
+          clientEmail: clientEmail,
+          privateKey: privateKey,
+        }),
+      });
+    }
 
-// For Local Development
-// import serviceAccount from "../service-account.json" assert { type: "json" };
-// if (!admin.apps.length) {
-//   admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//   });
-// }
+    const db = admin.firestore();
+    return { admin, db };
+  } catch (error) {
+    console.error("Error initializing Firebase Admin SDK:", error);
+    throw error;
+  }
+}
 
-// const db = admin.firestore();
-
-// export { admin, db };
+initializeAppWithSecrets()
+  .then(({ admin, db }) => {
+    // Now you can use admin and db in your functions
+    // Your functions implementation
+  })
+  .catch(console.error);

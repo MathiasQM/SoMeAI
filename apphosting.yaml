@@ -91,3 +91,5 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  - variable: SERVICE_ACCOUNT_PRIVATE_KEY
+    secret: SERVICE_ACCOUNT_PRIVATE_KEY
