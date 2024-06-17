@@ -11,33 +11,36 @@ async function getSecret(secretName) {
 }
 
 async function initializeAppWithSecrets() {
-  try {
-    const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
-    const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
-    const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
-    const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
+  const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
+  const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
+  const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
+  const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
 
-    if (!admin.apps.length) {
-      admin.initializeApp({
-        credential: admin.credential.cert({
-          projectId: projectId,
-          clientEmail: clientEmail,
-          privateKey: privateKey,
-        }),
-      });
-    }
+  console.log("Fetched PROJECT_ID:", projectId);
+  console.log("Fetched CLIENT_EMAIL:", clientEmail);
+  console.log("Fetched and formatted PRIVATE_KEY:", privateKey ? "Exists" : "Does not exist");
 
-    const db = admin.firestore();
-    return { admin, db };
-  } catch (error) {
-    console.error("Error initializing Firebase Admin SDK:", error);
-    throw error;
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId: projectId,
+        clientEmail: clientEmail,
+        privateKey: privateKey,
+      }),
+    });
   }
+
+  const db = admin.firestore();
+  return { admin, db };
 }
 
-initializeAppWithSecrets()
-  .then(({ admin, db }) => {
-    // Now you can use admin and db in your functions
-    // Your functions implementation
-  })
-  .catch(console.error);
+let firebaseAdminInstance = null;
+
+async function getFirebaseAdminInstance() {
+  if (!firebaseAdminInstance) {
+    firebaseAdminInstance = await initializeAppWithSecrets();
+  }
+  return firebaseAdminInstance;
+}
+
+export { getFirebaseAdminInstance };

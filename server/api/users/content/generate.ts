@@ -1,10 +1,12 @@
 import { defineEventHandler, readBody } from "h3";
 import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors";
-import { admin, db } from "../../../firebaseAdminConfig"; // Adjust the path as necessary
 import { formatForInstagram } from "../../../utils/users/content/helpers/instagram";
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
+import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+
+const { admin, db } = await getFirebaseAdminInstance();
 
 // Configure OpenAI client
 const openai = new OpenAI({
