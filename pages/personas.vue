@@ -512,28 +512,53 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
             <PersonasSection
               v-if="section === 'Writing Style'"
               title="Writing Style"
-              description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio vitae, eius sapiente repellat quae inventore reprehenderit id obcaecati, voluptates officia corrupti at? Ipsam praesentium vel hic, obcaecati totam amet atque."
+              description="These are NOT editable in this beta version. But coming in an update soon!"
             >
               <template #body>
                 <div class="w-full flex flex-col gap-2">
                   <p class="text-xsmall text-lighterdark font-normal lg:max-w-[100%] mdxl:max-w-[50%] xl:max-w-[100%]">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. NOTE: Sentence length og EmojiUse Skal
+                    NOTE: Sentence length og EmojiUse Skal
                     flyttes til "Writing Style" i firebase NOTE: Skal dette kontrolleres pr. platform? (Instagram,
                     Facebook, LinkedIn, etc.)
                   </p>
                 </div>
                 <div class="flex flex-wrap">
-                  <FormsInputText
-                    v-model="persona.toneOfVoice.communicationPreferences.sentenceLength"
+                  <FormsInputText disabled
+                    v-model="persona.writingStyle.sentenceLength"
                     label="Sentence length"
                   />
-                  <FormsInputText v-model="persona.toneOfVoice.communicationPreferences.emojiUse" label="Empoji use" />
-                  <FormsInputText v-model="persona.writingStyle.formality" label="Formality" />
-                  <FormsInputText v-model="persona.writingStyle.anecdotes" label="Anecdotes" />
-                  <FormsInputText v-model="persona.writingStyle.personalStories" label="Personal Stories" />
-                  <FormsInputText v-model="persona.writingStyle.pointOfView" label="Point Of View" />
-                  <FormsInputText v-model="persona.writingStyle.relatability" label="Relateability" />
-                  <FormsInputText v-model="persona.writingStyle.tone" label="Tone" />
+                  <FormsInputText disabled v-model="persona.writingStyle.emojiUse" label="Empoji use" />
+                  Visual Elements:
+
+Use of Emojis: How and when to use emojis.
+Formatting: Bold, italics, bullet points, etc.
+                  <FormsInputText disabled v-model="persona.writingStyle.formality" label="Formality" />
+                  <p>High Formality: Strictly professional with formal language.
+Moderate Formality: A balance between professional and casual.
+Low Formality: Very casual and relaxed.</p>
+                  <FormsInputText disabled v-model="persona.writingStyle.anecdotes" label="Anecdotes" />
+                  <FormsInputText disabled v-model="persona.writingStyle.personalStories" label="Personal Stories" />
+                  Anecdotes and Stories:
+
+Personal Stories: Includes personal experiences and anecdotes.
+Case Studies: Uses case studies and examples.
+                  <FormsInputText disabled v-model="persona.writingStyle.pointOfView" label="Point Of View" />
+                  First Person: Uses "I" or "we" (e.g., "We believe in...").
+Second Person: Uses "you" (e.g., "You will benefit from...").
+Third Person: Uses "he," "she," "they," or the brand name (e.g., "BrandBrainAI provides...").
+                  <FormsInputText disabled v-model="persona.writingStyle.relatability" label="Relateability" />
+                  High Relatability: Uses personal stories and anecdotes to connect with the audience.
+Moderate Relatability: Mix of relatable content and informational content.
+Low Relatability: Focuses primarily on facts and information.
+                  <FormsInputText disabled v-model="persona.writingStyle.tone" label="Tone" />
+                  Formal: Professional and sophisticated (e.g., "We are pleased to inform you...").
+Informal: Casual and conversational (e.g., "Hey there! Just wanted to let you know...").
+Humorous: Light-hearted and fun (e.g., "Why did the marketer cross the road?...").
+Serious: Straightforward and no-nonsense (e.g., "It's crucial to address...").
+Inspirational: Motivating and encouraging (e.g., "You have the power to achieve...").
+                  <FormsInputText disabled v-model="persona.writingStyle.tone" label="Voice" />
+                  <p>Active Voice: Uses active sentence structures (e.g., "We launched the product...").</p>
+                  <p>Passive Voice: Uses passive sentence structures (e.g., "The product was launched...").</p>
                 </div>
               </template>
             </PersonasSection>

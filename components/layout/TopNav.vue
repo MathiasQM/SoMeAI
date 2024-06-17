@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
 import { useGloabalState } from "@/stores/ui/useGlobalState";
+import { computed, provide, ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
   isEditorNav: {
@@ -46,10 +49,10 @@ const showContentTools = computed(() => {
 
 <template>
   <div
-    v-if="isEditorNav"
+    v-if="true"
     class="absolute z-10 mx-5 mt-2 w-[calc(100vw-70px)] md:w-[calc(100%-40px)] h-[70px] rounded-md px-5 flex items-center justify-between"
   >
-    <template v-if="!isEditorNav">
+    <template v-if="isEditorNav">
       <div class="flex items-center gap-5 w-1/3">
         <div
           @click="isMobileNavOpen = true"

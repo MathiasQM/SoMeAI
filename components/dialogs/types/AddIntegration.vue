@@ -14,34 +14,22 @@ const props = defineProps({
 
 const integrations = ref([
   {
-    platform: "Twitter",
-    handle: "Twitter handle",
-    isActive: false,
-    id: "1",
-  },
-  {
     platform: "Facebook",
     handle: "Facebook handle",
     isActive: false,
-    id: "2",
+    id: "1",
   },
   {
     platform: "Instagram",
     handle: "Instagram handle",
     isActive: true,
-    id: "3",
+    id: "2",
   },
   {
     platform: "LinkedIn",
     handle: "LinkedIn handle",
     isActive: false,
-    id: "4",
-  },
-  {
-    platform: "Threads",
-    handle: "Threads handle",
-    isActive: false,
-    id: "5",
+    id: "3",
   },
 ]);
 </script>

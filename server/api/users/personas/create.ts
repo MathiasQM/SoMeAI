@@ -10,7 +10,7 @@ const openai = new OpenAI({
 });
 
 const corsOptions = {
-  allowedOrigins: ["http://localhost:3000"],
+  allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app/contentai"],
   allowedMethods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 };

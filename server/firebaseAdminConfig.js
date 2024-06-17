@@ -16,3 +16,15 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 export { admin, db };
+
+// For Local Development
+// import serviceAccount from "../service-account.json" assert { type: "json" };
+// if (!admin.apps.length) {
+//   admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//   });
+// }
+
+// const db = admin.firestore();
+
+// export { admin, db };

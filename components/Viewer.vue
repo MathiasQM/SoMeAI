@@ -34,7 +34,7 @@ const route = useRoute();
   <div
     class="relative custom-scrollbar overflow-hidden transition-all w-full h-screen bg-grey-50 bg-light-50 dark:bg-black"
   >
-    <LayoutTopNav />
+    <LayoutTopNav :isEditorNav="route.path === '/contentai' ? true : false" />
     <div class="relative h-full custom-scrollbar flex flex-wrap gap-5">
       <slot />
     </div>
