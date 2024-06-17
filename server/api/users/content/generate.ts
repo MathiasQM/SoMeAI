@@ -5,9 +5,9 @@ import { formatForInstagram } from "../../../utils/users/content/helpers/instagr
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
-// Configure OpenAI client
+const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: useRuntimeConfig().public.OPENAI_API_KEY as string,
+  apiKey: config.public.openai.apiKey,
 });
 
 const corsOptions = {

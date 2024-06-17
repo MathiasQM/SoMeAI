@@ -31,7 +31,7 @@ export async function formatForFacebook(persona, personaDescription, userInput) 
     It should look like this: {
         content: "",
         hashtags: [],
-        post_time: ""
+        post_time: "" Should be a valid JS date string
     }
 
     Use this persona description as context for the brand: ${personaDescription}.
