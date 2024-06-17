@@ -1,4 +1,4 @@
-import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+import { getFirebaseAdminInstance } from "../../../../firebaseAdminConfig.js";
 
 // Helper function for Facebook
 export async function formatForFacebook(persona, personaDescription, userInput) {
