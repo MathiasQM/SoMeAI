@@ -7,8 +7,11 @@ import { PassThrough } from "stream";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
 const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: config.public.openai.apiKey,
+  apiKey: config.private.openai.apiKey,
 });
+let projectId = config.private.serviceAccount.projectId;
+let clientEmail = config.private.serviceAccount.clientEmail;
+let privateKey = config.private.serviceAccount.privateKey;
 const corsOptions = {
   allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app/contentai"],
   allowedMethods: ["GET", "POST"],
@@ -23,6 +26,9 @@ export default defineEventHandler(async (event) => {
 
   return {
     openaiApiKey: config.public.openai.apiKey,
+    projectId,
+    clientEmail,
+    privateKey,
   };
 
   const { admin, db } = await getFirebaseAdminInstance();
