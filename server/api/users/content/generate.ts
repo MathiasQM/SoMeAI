@@ -19,6 +19,12 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+
+  return {
+    openaiApiKey: config.public.openai.apiKey,
+  };
+
   const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
