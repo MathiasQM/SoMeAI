@@ -35,6 +35,12 @@ export default defineNuxtConfig({
         measurementId: process.env.NUXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
       } as FirebaseConfig,
     },
+    private: {
+      serviceAccount: {
+        projectId: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_PROJECT_ID,
+        clientEmail: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_CLIENT_EMAIL,
+        privateKey: process.env.NUXT_PRIVATE_SERVICE_ACCOUNT_PRIVATE_KEY,
+      },
   },
   plugins: [
     { src: "~/plugins/firebase.ts", ssr: false },

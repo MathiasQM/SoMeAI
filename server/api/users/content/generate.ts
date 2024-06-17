@@ -4,7 +4,8 @@ import { createCorsHandler } from "../../../utils/cors";
 import { formatForInstagram } from "../../../utils/users/content/helpers/instagram";
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
-import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+import { db } from "../../../firebaseAdminConfig.js";
+
 const config = useRuntimeConfig();
 const openai = new OpenAI({
   apiKey: config.public.openai.apiKey,
@@ -20,7 +21,6 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
-  const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
   const stream = new PassThrough();
