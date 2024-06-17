@@ -68,7 +68,7 @@ onMounted(() => {
       </div>
     </div>
     <div
-      v-show="selectedSessionResults.length > 0"
+      v-show="selectedSessionResults.length > 0 && selectedSession !== ''"
       class="flex flex-col items-center gap-5 w-full h-full relative overflow-x-hidden"
     >
       <div class="flex items-start gap-5 w-full h-full relative overflow-hidden">

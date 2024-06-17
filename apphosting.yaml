@@ -43,21 +43,51 @@ env:
       - RUNTIME
   - variable: SERVICE_ACCOUNT_TYPE
     secret: SERVICE_ACCOUNT_TYPE
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_PROJECT_ID
     secret: SERVICE_ACCOUNT_PROJECT_ID
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_PRIVATE_KEY_ID
     secret: SERVICE_ACCOUNT_PRIVATE_KEY_ID
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_CLIENT_EMAIL
     secret: SERVICE_ACCOUNT_CLIENT_EMAIL
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_CLIENT_ID
     secret: SERVICE_ACCOUNT_CLIENT_ID
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_AUTH_URI
     secret: SERVICE_ACCOUNT_AUTH_URI
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_TOKEN_URI
     secret: SERVICE_ACCOUNT_TOKEN_URI
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
     secret: SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_CLIENT_X509_CERT_URL
     secret: SERVICE_ACCOUNT_CLIENT_X509_CERT_URL
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: SERVICE_ACCOUNT_UNIVERSE_DOMAIN
     secret: SERVICE_ACCOUNT_UNIVERSE_DOMAIN
+    availability:
+      - BUILD
+      - RUNTIME
