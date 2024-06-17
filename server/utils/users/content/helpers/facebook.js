@@ -1,4 +1,4 @@
-import { db } from "../../../firebaseAdminConfig.js";
+import { db } from "../../../../firebaseAdminConfig.js";
 
 // Helper function for Facebook
 export async function formatForFacebook(persona, personaDescription, userInput) {

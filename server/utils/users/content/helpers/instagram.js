@@ -1,4 +1,4 @@
-import { db } from "../../../firebaseAdminConfig.js";
+import { db } from "../../../../firebaseAdminConfig.js";
 
 // Helper function for Instagram
 export async function formatForInstagram(persona, personaDescription, userInput) {
