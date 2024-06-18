@@ -61,5 +61,5 @@ const openEditor = (index) => {
       </div>
     </div>
   </div>
-  <div v-show="isEditorOpen" class="fixed z-50 top-0 left-0 w-full h-full bg-black/20"></div>
+  <div v-show="isEditorOpen" class="absolute z-50 top-0 left-0 w-full h-full bg-black/20"></div>
 </template>
