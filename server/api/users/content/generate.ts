@@ -16,11 +16,6 @@ async function getSecret(secretName) {
   return version.payload.data.toString();
 }
 
-const config = useRuntimeConfig();
-const openai = new OpenAI({
-  apiKey: openaiApiKey,
-});
-
 const corsOptions = {
   allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app/contentai"],
   allowedMethods: ["GET", "POST"],
@@ -36,7 +31,9 @@ export default defineEventHandler(async (event) => {
   const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
   const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
   const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
-  const config = useRuntimeConfig();
+  const openai = new OpenAI({
+    apiKey: openaiApiKey,
+  });
 
   return {
     openaiApiKey: openaiApiKey,
