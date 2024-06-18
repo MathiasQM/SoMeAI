@@ -4,7 +4,7 @@ import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
 import { admin, db } from "../../../firebaseAdminConfig.js";
 const openai = new OpenAI({
-  apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.NUXT_OPENAI_API_KEY,
 });
 
 const corsOptions = {

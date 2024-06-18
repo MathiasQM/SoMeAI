@@ -1,6 +1,9 @@
 <script setup>
 import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
 import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
+import PlatformPreviewsLinkedin from "~/components/platformPreviews/Linkedin.vue";
+import PlatformPreviewsThreads from "~/components/platformPreviews/Threads.vue";
+import PlatformPreviewsX from "~/components/platformPreviews/X.vue";
 
 const props = defineProps({
   result: Object,
@@ -13,6 +16,9 @@ const isEditorOpen = ref(false);
 const channelToComponentMap = {
   Facebook: PlatformPreviewsFacebook,
   Instagram: PlatformPreviewsInstagram,
+  LinkedIn: PlatformPreviewsLinkedin,
+  Threads: PlatformPreviewsThreads,
+  X: PlatformPreviewsX,
 };
 
 // Function to get component based on channel

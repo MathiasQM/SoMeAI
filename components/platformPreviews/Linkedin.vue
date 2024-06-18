@@ -110,7 +110,7 @@ watch(
         </div>
         <div class="absolute right-5 flex items-center gap-5">
           <!-- <button v-if="!isEditable" class="text-psmall text-white bg-purple-dark py-1 px-4 rounded-md">Edit</button> -->
-          <NuxtIcon name="Instagram" filled class="text-3xl text-black" />
+          <NuxtIcon name="Linkedin"  class="text-3xl" />
         </div>
       </div>
       <div @click.stop="console.log('Vælg fil')" class="w-full my-2 flex-shrink-0">

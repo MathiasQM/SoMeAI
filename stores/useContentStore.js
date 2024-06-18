@@ -170,6 +170,55 @@ export const useContentStore = defineStore("useContent", () => {
     }
   };
 
+  const modifyPost = async (channel, prompt, postContent) => {
+    const requestData = {
+      userId: userAuth.value.uid,
+      personaDescription: selectedPersona.value.personaDescription,
+      channel: channel,
+      prompt: prompt,
+      postContent: postContent,
+    }
+
+    try {
+      const response = await fetch("/api/users/content/modify", {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      // Assuming the response is streaming in chunks
+      const reader = response.body.getReader();
+      let chunks = '';
+      while (true) {
+        const { done, value } = await reader.read();
+  
+        if (done) {
+          break;
+        }
+  
+        // Append each chunk to the string
+        chunks += new TextDecoder().decode(value);
+      }
+  
+      // Now chunks should contain the complete concatenated response
+      const responseData = JSON.parse(chunks);
+  
+      console.log(responseData, 'responseData');
+      return responseData;
+    } catch (error) {
+      console.error("Error generating content:", error);
+      throw error; // Rethrow the error for the caller to handle
+    }
+  }
+
+  
+
   return {
     personas,
     userInput,
@@ -184,5 +233,6 @@ export const useContentStore = defineStore("useContent", () => {
     generateContentForChannel,
     selectChannel,
     updateSelectedSession,
+    modifyPost,
   };
 });

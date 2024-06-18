@@ -3,6 +3,10 @@ import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors";
 import { formatForInstagram } from "../../../utils/users/content/helpers/instagram";
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
+import { formatForLinkedin } from "~/server/utils/users/content/helpers/linkedin";
+import { formatForThreads } from "~/server/utils/users/content/helpers/Threads";
+import { formatForX } from "~/server/utils/users/content/helpers/X";
+
 import { PassThrough } from "stream";
 import { admin, db } from "../../../firebaseAdminConfig.js";
 
@@ -122,6 +126,15 @@ async function formatRequestForChannel(channel: string, persona: any, personaDes
       break;
     case "Facebook":
       formattedRequest = await formatForFacebook(persona, personaDescription, prompt);
+      break;
+    case "LinkedIn":
+      formattedRequest = await formatForLinkedin(persona, personaDescription, prompt);
+      break;
+    case "Threads":
+    formattedRequest = await formatForThreads(persona, personaDescription, prompt);
+      break;
+    case "X":
+    formattedRequest = await formatForX(persona, personaDescription, prompt);
       break;
     default:
       throw new Error("Unsupported channel: " + channel);

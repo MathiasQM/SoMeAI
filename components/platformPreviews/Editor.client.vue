@@ -3,6 +3,10 @@ import Quill from "quill";
 import DOMPurify from "dompurify";
 import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
 import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
+import PlatformPreviewsLinkedin from "~/components/platformPreviews/Linkedin.vue";
+import PlatformPreviewsThreads from "~/components/platformPreviews/Threads.vue";
+import PlatformPreviewsX from "~/components/platformPreviews/X.vue";
+
 
 const emit = defineEmits(["closeEditor"]);
 
@@ -11,6 +15,9 @@ const isEditorOpen = ref(false);
 const channelToComponentMap = {
   Facebook: PlatformPreviewsFacebook,
   Instagram: PlatformPreviewsInstagram,
+  LinkedIn: PlatformPreviewsLinkedin,
+  Threads: PlatformPreviewsThreads,
+  X: PlatformPreviewsX,
 };
 
 // Function to get component based on channel
@@ -34,6 +41,7 @@ const props = defineProps({
 });
 
 const quillEditor = ref(null);
+const userInput = ref('')
 
 const contentStore = useContentStore();
 const { editedContent, selectedSessionResults } = storeToRefs(contentStore);
@@ -104,10 +112,13 @@ onMounted(() => {
         <component :is="getComponentForChannel(result.channel)" :result="result" :isEditable="isEditable" />
       </div>
       <div class="relative flex w-[400px] justify-center items-center overflow-hidden">
+ 
         <input
+          v-model="userInput"
           type="text"
           class="w-full rounded-lg h-16 pl-10 dark:bg-darkgrey dark:text-white dark:placeholder:text-white border-none focus:outline-purple-dark"
           placeholder="Modify this post with AI"
+          @keydown.enter="contentStore.modifyPost(result.channel, userInput, result.content)"
         />
         <NuxtIcon
           name="AI"
@@ -115,6 +126,7 @@ onMounted(() => {
         />
         <NuxtIcon
           name="ArrowUp"
+          @click="contentStore.modifyPost(result.channel, userInput, result.content)"
           class="transition-all flex items-center justify-center absolute hover:scale-105 cursor-pointer right-0 bg-purple-dark w-10 h-10 mr-5 text-white text-2xl rounded-lg"
         />
       </div>
