@@ -1,11 +1,11 @@
 import admin from "firebase-admin";
 
-// Read the service account key from the secret file
+console.log(process.env.SERVICE_ACCOUNT_PRIVATE_KEY);
 const serviceAccount = {
   type: process.env.SERVICE_ACCOUNT_TYPE,
   project_id: process.env.SERVICE_ACCOUNT_PROJECT_ID,
   private_key_id: process.env.SERVICE_ACCOUNT_PRIVATE_KEY_ID,
-  private_key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  private_key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY,
   client_email: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
   client_id: process.env.SERVICE_ACCOUNT_CLIENT_ID,
   auth_uri: process.env.SERVICE_ACCOUNT_AUTH_URI,
