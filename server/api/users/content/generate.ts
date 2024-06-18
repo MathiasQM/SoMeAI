@@ -4,7 +4,7 @@ import { createCorsHandler } from "../../../utils/cors";
 import { formatForInstagram } from "../../../utils/users/content/helpers/instagram";
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
-import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+import { admin, db } from "../../../firebaseAdminConfig.js";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
 const client = new SecretManagerServiceClient();
@@ -42,7 +42,6 @@ export default defineEventHandler(async (event) => {
     privateKey: privateKey,
   };
 
-  const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
   const stream = new PassThrough();
