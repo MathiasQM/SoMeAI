@@ -6,11 +6,6 @@ runConfig:
   cpu: 2
   memoryMiB: 1024
 env:
-  - variable: GOOGLE_APPLICATION_CREDENTIALS
-    secret: service-account-key
-    availability:
-      - BUILD
-      - RUNTIME
   - variable: NUXT_PUBLIC_FIREBASE_API_KEY
     secret: firebase_api_key_secret
     availability:
@@ -98,7 +93,11 @@ env:
       - RUNTIME
   - variable: SERVICE_ACCOUNT_PRIVATE_KEY
     secret: SERVICE_ACCOUNT_PRIVATE_KEY
+    availability:
+      - BUILD
+      - RUNTIME
   - variable: NUXT_PUBLIC_OPENAI_API_KEY
     secret: NUXT_PUBLIC_OPENAI_API_KEY
-  - variable: SERVICE_ACCOUNT
-    secret: service-account
+    availability:
+      - BUILD
+      - RUNTIME
