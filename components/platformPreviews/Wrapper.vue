@@ -25,7 +25,7 @@ const openEditor = () => {
 </script>
 
 <template>
-  <div v-show="result" class="relative group flex gap-5">
+  <div class="relative group flex gap-5">
     <component
       :is="getComponentForChannel(result.channel)"
       :result="result"

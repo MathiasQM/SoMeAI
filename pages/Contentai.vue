@@ -20,13 +20,15 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
         <component :is="dynamicComponent" />
       </div>
     </div>
-    <div
-      v-show="selectedSession !== ''"
-      class="flex flex-col items-center gap-5 w-full h-full relative overflow-x-hidden"
-    >
-      <div class="flex items-start gap-5 w-full h-full relative">
-        <!-- <ContentaiZoomContainer>
+
+    <div class="flex items-start gap-5 w-full h-full relative">
+      <!-- <ContentaiZoomContainer>
           <template v-slot:zoomable> -->
+      <TransitionGroup
+        v-show="selectedSession !== ''"
+        tag="div"
+        class="flex items-center gap-5 w-full h-full relative overflow-x-hidden"
+      >
         <div
           v-for="(result, i) in selectedSessionResults"
           :key="result.id"
@@ -34,25 +36,28 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
         >
           <PlatformPreviewsWrapper :result="result" @openEditor="openEditor(i)" />
         </div>
-        <!-- </template>
+      </TransitionGroup>
+      <!-- </template>
     </ContentaiZoomContainer> -->
-        <PlatformPreviewsEditor
-          :result="selectedSessionResults[editorIndex]"
-          :isEditable="isEditorOpen"
-          @closeEditor="(isEditorOpen = false), (editorIndex = null)"
-        />
-      </div>
+      <PlatformPreviewsEditor
+        :result="selectedSessionResults[editorIndex]"
+        :isEditable="isEditorOpen"
+        @closeEditor="(isEditorOpen = false), (editorIndex = null)"
+      />
     </div>
   </div>
 </template>
 
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s;
-}
-.fade-enter,
-.fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+<style>
+.v-enter-from {
   opacity: 0;
+  rotate: 180deg;
+}
+.v-enter-to {
+  opacity: 1;
+  rotate: 0deg;
+}
+.v-enter-active {
+  transition: all 0.7s;
 }
 </style>
