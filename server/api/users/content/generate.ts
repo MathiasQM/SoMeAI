@@ -7,10 +7,11 @@ import { PassThrough } from "stream";
 import { admin, db } from "../../../firebaseAdminConfig.js";
 
 const corsOptions = {
-  allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app/contentai"],
+  allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app"],
   allowedMethods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 };
+
 const openai = new OpenAI({
   apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
 });

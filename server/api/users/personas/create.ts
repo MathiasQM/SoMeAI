@@ -139,6 +139,8 @@ export default defineEventHandler(async (event) => {
                }
            "writingStyle": {
                "pointOfView": "First person",
+               "emojiUse": "Use emojis to enhance the message subtly but avoid overuse to maintain professionalism.",
+               "sebtenceLength": "14",
                "personalStories": true,
                "anecdotes": true,
                "formality": "Casual",
