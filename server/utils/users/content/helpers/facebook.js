@@ -1,7 +1,9 @@
-import { admin, db } from "../../../../firebaseAdminConfig.js";
+import { admin, getFirestore } from "../../../../firebaseAdminConfig.js";
 
 // Helper function for Facebook
 export async function formatForFacebook(persona, personaDescription, userInput) {
+  const db = await getFirestore(); // Ensure Firestore is initialized
+
   let responseStructure = {
     content: "",
     hashtags: [],

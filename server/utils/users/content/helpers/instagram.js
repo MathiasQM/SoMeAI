@@ -1,6 +1,7 @@
-import { admin, db } from "../../../../firebaseAdminConfig"; // Adjust the path as necessary
+import { admin, getFirestore } from "../../../../firebaseAdminConfig"; // Adjust the path as necessary
 // Helper function for Instagram
 export async function formatForInstagram(persona, personaDescription, userInput) {
+  const db = await getFirestore(); // Ensure Firestore is initialized
   let responseStructure = {
     content: "",
     caption: "",
