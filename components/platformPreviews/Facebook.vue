@@ -97,7 +97,7 @@ watch(
 <template>
   <div class="overflow-hidden bg-white rounded-lg border border-creme p-2 shadow-lg cursor-pointer">
     <div
-      :class="isEditable ? 'overflow-y-auto pl-[10px]' : 'overflow-hidden'"
+      :class="isEditable ? 'overflow-y-auto' : 'overflow-hidden'"
       class="scrollbarContainer overflow-x-hidden flex flex-col w-[400px] max-h-[72vh]"
     >
       <div class="flex items-center p-4 gap-2 w-full relative">

@@ -97,7 +97,7 @@ watch(
 <template>
   <div class="overflow-hidden bg-white rounded-lg border border-creme p-2 shadow-lg cursor-pointer">
     <div
-      :class="isEditable ? 'overflow-y-auto pl-[10px]' : 'overflow-hidden'"
+      :class="isEditable ? 'overflow-y-auto' : 'overflow-hidden'"
       class="custom-scrollbar overflow-x-hidden flex flex-col w-[400px] max-h-[70vh]"
     >
       <div class="flex items-center p-4 gap-2 relative">
@@ -152,6 +152,7 @@ watch(
       <p class="mt-2">
         <span class="font-bold">{{ selectedPersona.personaName }}</span>
       </p>
+      {{ isEditable ? "editor" : "" }}
       <div
         :id="isEditable ? 'editor' : ''"
         class="mt-2 text-xsmall pre-line leading-4 !outline-none !border-none"

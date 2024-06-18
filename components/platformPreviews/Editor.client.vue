@@ -1,32 +1,81 @@
 <script setup>
-// import Quill from "quill";
-// import DOMPurify from "dompurify";
+import Quill from "quill";
+import DOMPurify from "dompurify";
+import PlatformPreviewsInstagram from "~/components/platformPreviews/Instagram.vue";
+import PlatformPreviewsFacebook from "~/components/platformPreviews/Facebook.vue";
+
+const emit = defineEmits(["closeEditor"]);
+
+const isEditorOpen = ref(false);
+
+const channelToComponentMap = {
+  Facebook: PlatformPreviewsFacebook,
+  Instagram: PlatformPreviewsInstagram,
+};
+
+// Function to get component based on channel
+const getComponentForChannel = (channel) => {
+  return channelToComponentMap[channel] || null;
+};
+const closeEditor = () => {
+  emit("closeEditor");
+};
 
 const props = defineProps({
-  component: {
-    type: Object,
-    required: true,
-  },
   result: {
     type: Object,
     required: true,
   },
-  isOpen: {
+  isEditable: {
     type: Boolean,
     required: true,
     default: false,
   },
 });
 
-// const quillEditor = ref(null);
+const quillEditor = ref(null);
 
-// const localIsOpen = ref(props.isOpen);
+const contentStore = useContentStore();
+const { editedContent, selectedSessionResults } = storeToRefs(contentStore);
 
-// const contentStore = useContentStore();
-// const { editedContent, selectedSessionResults } = storeToRefs(contentStore);
+onMounted(() => {
+  watch(
+    () => props.isEditable,
+    (isEditable) => {
+      if (isEditable) {
+        nextTick(() => {
+          var toolbarOptions = [
+            ["bold", "italic", "underline", "strike", "link"], // toggled buttons
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ font: [] }],
+          ];
 
-// onMounted(() => {
-//   nextTick(() => {
+          // Assign the new Quill instance to quillEditor.value
+          quillEditor.value = new Quill("#editor", {
+            modules: {
+              toolbar: toolbarOptions,
+            },
+            theme: "snow",
+          });
+
+          // Setup the event listener
+          quillEditor.value.on("text-change", () => {
+            // Use .value to access the Quill instance and get the HTML content
+            const htmlContent = quillEditor.value.root.innerHTML;
+            // Sanitize the HTML content to prevent XSS attacks
+            const safeContent = DOMPurify.sanitize(htmlContent);
+
+            if (editedContent.value !== safeContent) {
+              editedContent.value = safeContent;
+            }
+          });
+        });
+      }
+    },
+    { immediate: true }
+  );
+});
+
 //     var toolbarOptions = [
 //       ["bold", "italic", "underline", "strike", "link"], // toggled buttons
 //       // ['blockquote', 'code-block'],
@@ -46,42 +95,13 @@ const props = defineProps({
 
 //       // ['clean']                                         // remove formatting button
 //     ];
-
-//     // Assign the new Quill instance to quillEditor.value
-//     // if (quillEditor.value) {
-//     quillEditor.value = new Quill("#editor", {
-//       modules: {
-//         toolbar: toolbarOptions,
-//       },
-//       theme: "snow",
-//     });
-
-//     // Setup the event listener
-//     quillEditor.value.on("text-change", () => {
-//       // Use .value to access the Quill instance and get the HTML content
-//       const htmlContent = quillEditor.value.root.innerHTML;
-//       // Sanitize the HTML content to prevent XSS attacks
-//       const safeContent = DOMPurify.sanitize(htmlContent);
-
-//       if (editedContent.value !== safeContent) {
-//         editedContent.value = safeContent;
-//       }
-//     });
-//     // }
-//   });
-// });
-
-const saveNewContent = (index) => {
-  // contentStore.updateSelectedSession(index);
-  props.isOpen = false;
-  // stopZoomAndDrag.value = false;
-};
 </script>
+
 <template>
-  <div class="fixed top-0 left-0 z-20 w-full h-full bg-black/80 flex justify-between">
+  <div v-if="isEditable" class="fixed top-0 left-0 z-20 bg-black/30 w-full h-full flex">
     <div class="relative flex flex-col items-center justify-center gap-5 w-full h-full">
       <div class="w-full flex justify-center">
-        <component :is="component" :result="result" :isEditable="isOpen" />
+        <component :is="getComponentForChannel(result.channel)" :result="result" :isEditable="isEditable" />
       </div>
       <div class="relative flex w-[400px] justify-center items-center overflow-hidden">
         <input
@@ -110,16 +130,10 @@ const saveNewContent = (index) => {
         <br />
         <p>Alt efter dit abonnement kan du også vælge at "planlægge, hvornår dette post skal gå live"</p>
         <div class="flex justify-center gap-2 w-full absolute bottom-10">
-          <button
-            class="text-psmall text-black bg-creme py-2 px-4 rounded-md w-32"
-            @click.stop="(openLightBoxId = null), (stopZoomAndDrag = false)"
-          >
+          <button class="text-psmall text-black bg-creme py-2 px-4 rounded-md w-32" @click.stop="closeEditor">
             Cancel
           </button>
-          <button
-            class="text-psmall text-white bg-purple-dark py-2 px-4 rounded-md w-32"
-            @click.stop="saveNewContent(openLightBoxId)"
-          >
+          <button class="text-psmall text-white bg-purple-dark py-2 px-4 rounded-md w-32" @click.stop="closeEditor">
             Save
           </button>
           <button

@@ -1,7 +1,13 @@
 <script setup>
 import CampaignWiz from "~/components/dialogs/Wizard/CampaignWiz.vue";
 
+const isEditorOpen = ref(false);
+const editorIndex = ref(null);
 const dynamicComponent = shallowRef(CampaignWiz);
+const openEditor = (index) => {
+  editorIndex.value = index;
+  isEditorOpen.value = true;
+};
 
 const contentStore = useContentStore();
 const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = storeToRefs(contentStore);
@@ -15,15 +21,26 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
       </div>
     </div>
     <div
-      v-show="selectedSessionResults.length > 0 && selectedSession !== ''"
+      v-show="selectedSession !== ''"
       class="flex flex-col items-center gap-5 w-full h-full relative overflow-x-hidden"
     >
       <div class="flex items-start gap-5 w-full h-full relative">
-        <ContentaiZoomContainer>
-          <template v-slot:zoomable>
-            <PlatformPreviewsWrapper />
-          </template>
-        </ContentaiZoomContainer>
+        <!-- <ContentaiZoomContainer>
+          <template v-slot:zoomable> -->
+        <div
+          v-for="(result, i) in selectedSessionResults"
+          :key="result.id"
+          class="w-full flex justify-center items-center h-full fade-item"
+        >
+          <PlatformPreviewsWrapper :result="result" @openEditor="openEditor(i)" />
+        </div>
+        <!-- </template>
+    </ContentaiZoomContainer> -->
+        <PlatformPreviewsEditor
+          :result="selectedSessionResults[editorIndex]"
+          :isEditable="isEditorOpen"
+          @closeEditor="(isEditorOpen = false), (editorIndex = null)"
+        />
       </div>
     </div>
   </div>
