@@ -3,9 +3,8 @@ import { defineEventHandler, createError, readBody } from "h3";
 import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
 import { admin, db } from "../../../firebaseAdminConfig.js";
-const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: config.public.openai.apiKey,
+  apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
 });
 
 const corsOptions = {
