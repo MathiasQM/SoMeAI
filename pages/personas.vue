@@ -519,7 +519,7 @@ const handleAgeRangeUpdate = (event, minOrMax) => {
                   <p class="text-xsmall text-lighterdark font-normal lg:max-w-[100%] mdxl:max-w-[50%] xl:max-w-[100%]">
                     NOTE: Sentence length og EmojiUse Skal
                     flyttes til "Writing Style" i firebase NOTE: Skal dette kontrolleres pr. platform? (Instagram,
-                    Facebook, LinkedIn, etc.).
+                    Facebook, LinkedIn, etc.)-
                   </p>
                 </div>
                 <div class="flex flex-wrap">
