@@ -5,9 +5,25 @@ import { formatForInstagram } from "../../../utils/users/content/helpers/instagr
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
 import { getFirebaseAdminInstance } from "../../../firebaseAdminConfig.js";
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+
+const client = new SecretManagerServiceClient();
+
+async function getSecret(secretName) {
+  const [version] = await client.accessSecretVersion({
+    name: secretName,
+  });
+  return version.payload.data.toString();
+}
+const openaiApiKey = await getSecret("projects/1026306623588/secrets/NUXT_PUBLIC_OPENAI_API_KEY/versions/latest");
+const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
+const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
+const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
+const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
+
 const config = useRuntimeConfig();
 const openai = new OpenAI({
-  apiKey: config.public.openai.apiKey,
+  apiKey: openaiApiKey,
 });
 
 const corsOptions = {
@@ -20,6 +36,15 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+
+  return {
+    openaiApiKey: openaiApiKey,
+    projectId: projectId,
+    clientEmai: clientEmail,
+    privateKey: privateKey,
+  };
+
   const { admin, db } = await getFirebaseAdminInstance();
   const req = event.node.req;
   const res = event.node.res;
