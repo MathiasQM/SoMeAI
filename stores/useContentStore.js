@@ -47,7 +47,11 @@ export const useContentStore = defineStore("useContent", () => {
       }
 
       // Create a query to get all documents with the matching personaId
-      const q = query(collection(db, "contentCreation"), where("personaId", "==", newPersona.personaId));
+      const q = query(
+        collection(db, "contentCreation"),
+        where("personaId", "==", newPersona.personaId),
+        orderBy("timestamp", "desc")
+      );
 
       // Set up a listener for the query result
       queryUnsubscribe = onSnapshot(
@@ -154,8 +158,6 @@ export const useContentStore = defineStore("useContent", () => {
         method: "POST",
         body: requestData,
       });
-
-      console.log(success, data, error);
 
       selectedSession.value = sessions.value[0]; // Set the selected session to the first session - Should be the newly created session
       newContentName.value = "";
