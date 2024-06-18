@@ -4,7 +4,7 @@ import { createCorsHandler } from "../../../utils/cors";
 import { formatForInstagram } from "../../../utils/users/content/helpers/instagram";
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
-import { admin, getFirestore } from "../../../firebaseAdminConfig.js";
+import { admin, db } from "../../../firebaseAdminConfig.js";
 
 const corsOptions = {
   allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app"],
@@ -20,8 +20,6 @@ const openai = new OpenAI({
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
-  const db = await getFirestore(); // Ensure Firestore is initialized
-
   const req = event.node.req;
   const res = event.node.res;
   const stream = new PassThrough();

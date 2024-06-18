@@ -2,7 +2,7 @@
 import { defineEventHandler, createError, readBody } from "h3";
 import OpenAI from "openai";
 import { createCorsHandler } from "../../../utils/cors.js";
-import { admin, getFirestore } from "../../../firebaseAdminConfig.js";
+import { admin, db } from "../../../firebaseAdminConfig.js";
 const openai = new OpenAI({
   apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
 });
@@ -16,8 +16,6 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
-  const db = await getFirestore(); // Ensure Firestore is initialized
-
   const req = event.node.req;
   const res = event.node.res;
 

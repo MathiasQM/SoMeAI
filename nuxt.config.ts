@@ -21,9 +21,6 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    // serviceAccountProjectId: process.env.NUXT_SERVICE_ACCOUNT_PROJECT_ID,
-    // serviceAccountClientEmail: process.env.NUXT_SERVICE_ACCOUNT_CLIENT_EMAIL,
-    // serviceAccountPrivateKey: process.env.NUXT_SERVICE_ACCOUNT_PRIVATE_KEY,
     public: {
       firebase: {
         apiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
