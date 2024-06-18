@@ -194,7 +194,8 @@ export const useContentStore = defineStore("useContent", () => {
   
       // Assuming the response is streaming in chunks
       const reader = response.body.getReader();
-      let chunks = '';
+      const decoder = new TextDecoder()
+      let completeData = '';
       while (true) {
         const { done, value } = await reader.read();
   
@@ -203,11 +204,18 @@ export const useContentStore = defineStore("useContent", () => {
         }
   
         // Append each chunk to the string
-        chunks += new TextDecoder().decode(value);
+        const chunk = decoder.decode(value, {stream: true});
+        completeData += chunk;
+      }
+      try {
+        const parsedChunk = JSON.parse(completeData)
+        console.log(parsedChunk.content, 'parsedChunk')
+      } catch(error) {
+        console.log(error)
       }
   
       // Now chunks should contain the complete concatenated response
-      const responseData = JSON.parse(chunks);
+      const responseData = JSON.parse(chunk);
   
       console.log(responseData, 'responseData');
       return responseData;
