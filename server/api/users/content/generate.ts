@@ -5,16 +5,16 @@ import { formatForInstagram } from "../../../utils/users/content/helpers/instagr
 import { formatForFacebook } from "../../../utils/users/content/helpers/facebook";
 import { PassThrough } from "stream";
 import { admin, db } from "../../../firebaseAdminConfig.js";
-import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+// import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
-const client = new SecretManagerServiceClient();
+// const client = new SecretManagerServiceClient();
 
-async function getSecret(secretName) {
-  const [version] = await client.accessSecretVersion({
-    name: secretName,
-  });
-  return version.payload.data.toString();
-}
+// async function getSecret(secretName) {
+//   const [version] = await client.accessSecretVersion({
+//     name: secretName,
+//   });
+//   return version.payload.data.toString();
+// }
 
 const corsOptions = {
   allowedOrigins: ["http://localhost:3000", "https://someai--contentai-f4d3e.us-central1.hosted.app/contentai"],
@@ -26,20 +26,20 @@ const corsOptions = {
 const corsHandler = createCorsHandler(corsOptions);
 
 export default defineEventHandler(async (event) => {
-  const openaiApiKey = await getSecret("projects/1026306623588/secrets/NUXT_PUBLIC_OPENAI_API_KEY/versions/latest");
-  const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
-  const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
-  const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
-  const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
+  // const openaiApiKey = await getSecret("projects/1026306623588/secrets/NUXT_PUBLIC_OPENAI_API_KEY/versions/latest");
+  // const projectId = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PROJECT_ID/versions/latest");
+  // const clientEmail = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_CLIENT_EMAIL/versions/latest");
+  // const privateKeyRaw = await getSecret("projects/1026306623588/secrets/SERVICE_ACCOUNT_PRIVATE_KEY/versions/latest");
+  // const privateKey = privateKeyRaw.replace(/\\n/g, "\n");
   const openai = new OpenAI({
-    apiKey: openaiApiKey,
+    apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
   });
 
   return {
-    openaiApiKey: openaiApiKey,
-    projectId: projectId,
-    clientEmai: clientEmail,
-    privateKey: privateKey,
+    openaiApiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
+    projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
+    clientEmai: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
+    privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n"),
   };
 
   const req = event.node.req;
