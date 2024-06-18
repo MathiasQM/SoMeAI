@@ -100,3 +100,5 @@ env:
     secret: SERVICE_ACCOUNT_PRIVATE_KEY
   - variable: NUXT_PUBLIC_OPENAI_API_KEY
     secret: NUXT_PUBLIC_OPENAI_API_KEY
+  - variable: SERVICE_ACCOUNT
+    secret: service-account
