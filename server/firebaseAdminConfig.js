@@ -1,9 +1,15 @@
 import admin from "firebase-admin";
+import fs from "fs";
 
-// Initialize Firebase Admin SDK using the service account key file
+// Assuming GOOGLE_APPLICATION_CREDENTIALS contains the path to the secret file
+const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+
+// Read the service account key from the secret file
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
+    credential: admin.credential.cert(serviceAccount),
   });
 }
 
