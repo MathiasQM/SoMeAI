@@ -13,7 +13,7 @@ const corsOptions = {
 };
 
 const openai = new OpenAI({
-  apiKey: process.env.NUXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.NUXT_OPENAI_API_KEY,
 });
 
 // CORS configuration
