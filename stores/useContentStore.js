@@ -26,6 +26,7 @@ export const useContentStore = defineStore("useContent", () => {
   const editedContent = ref(null);
   const userInput = ref("");
   const stopZoomAndDrag = ref(false);
+  const modifiedContent = ref("");
 
   const personaStore = usePersonaStore();
   const { personas, selectedPersona } = storeToRefs(personaStore);
@@ -177,7 +178,7 @@ export const useContentStore = defineStore("useContent", () => {
       channel: channel,
       prompt: prompt,
       postContent: postContent,
-    }
+    };
 
     try {
       const response = await fetch("/api/users/content/modify", {
@@ -187,45 +188,65 @@ export const useContentStore = defineStore("useContent", () => {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      // Assuming the response is streaming in chunks
+
       const reader = response.body.getReader();
-      const decoder = new TextDecoder()
-      let completeData = '';
+      const decoder = new TextDecoder();
+      let buffer = "";
+
       while (true) {
         const { done, value } = await reader.read();
-  
-        if (done) {
-          break;
+        if (done) break;
+
+        // Append each chunk to the buffer
+        buffer += decoder.decode(value, { stream: true });
+
+        // Attempt to parse the buffer into JSON objects
+        let boundary = buffer.indexOf("}{");
+        while (boundary !== -1) {
+          const chunk = buffer.slice(0, boundary + 1).trim();
+          buffer = buffer.slice(boundary + 1);
+
+          if (chunk) {
+            try {
+              const parsedChunk = JSON.parse(chunk);
+              console.log(parsedChunk.content); // Update your UI component with this content
+              modifiedContent.value += parsedChunk.content;
+            } catch (error) {
+              console.error("Error parsing chunk:", chunk, error);
+            }
+          }
+          boundary = buffer.indexOf("}{");
         }
-  
-        // Append each chunk to the string
-        const chunk = decoder.decode(value, {stream: true});
-        completeData += chunk;
       }
-      try {
-        const parsedChunk = JSON.parse(completeData)
-        console.log(parsedChunk.content, 'parsedChunk')
-      } catch(error) {
-        console.log(error)
+
+      if (buffer.trim()) {
+        // Handle any remaining data
+        try {
+          const remainingChunks = buffer.trim().split(/(?<=})\s*(?={"content":)/);
+          remainingChunks.forEach((chunk) => {
+            if (chunk.trim()) {
+              try {
+                const parsedChunk = JSON.parse(chunk.trim());
+                console.log(parsedChunk.content); // Update your UI component with this content
+                modifiedContent.value += parsedChunk.content;
+              } catch (error) {
+                console.error("Error parsing remaining chunk:", chunk, error);
+              }
+            }
+          });
+        } catch (error) {
+          console.error("Error parsing remaining buffer:", buffer, error);
+        }
       }
-  
-      // Now chunks should contain the complete concatenated response
-      const responseData = JSON.parse(chunk);
-  
-      console.log(responseData, 'responseData');
-      return responseData;
     } catch (error) {
       console.error("Error generating content:", error);
       throw error; // Rethrow the error for the caller to handle
     }
-  }
-
-  
+  };
 
   return {
     personas,
@@ -238,6 +259,7 @@ export const useContentStore = defineStore("useContent", () => {
     newContentName,
     contentPurpose,
     stopZoomAndDrag,
+    modifiedContent,
     generateContentForChannel,
     selectChannel,
     updateSelectedSession,

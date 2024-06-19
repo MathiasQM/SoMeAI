@@ -7,7 +7,6 @@ import PlatformPreviewsLinkedin from "~/components/platformPreviews/Linkedin.vue
 import PlatformPreviewsThreads from "~/components/platformPreviews/Threads.vue";
 import PlatformPreviewsX from "~/components/platformPreviews/X.vue";
 
-
 const emit = defineEmits(["closeEditor"]);
 
 const isEditorOpen = ref(false);
@@ -41,10 +40,10 @@ const props = defineProps({
 });
 
 const quillEditor = ref(null);
-const userInput = ref('')
+const userInput = ref("");
 
 const contentStore = useContentStore();
-const { editedContent, selectedSessionResults } = storeToRefs(contentStore);
+const { editedContent, selectedSessionResults, modifiedContent } = storeToRefs(contentStore);
 
 onMounted(() => {
   watch(
@@ -110,9 +109,15 @@ onMounted(() => {
     <div class="relative flex flex-col items-center justify-center gap-5 w-full h-full">
       <div class="w-full flex justify-center">
         <component :is="getComponentForChannel(result.channel)" :result="result" :isEditable="isEditable" />
+        <component
+          v-if="modifiedContent"
+          :is="getComponentForChannel(result.channel)"
+          :modifiedContent="modifiedContent ? true : false"
+          :result="modifiedContent"
+          :isEditable="false"
+        />
       </div>
       <div class="relative flex w-[400px] justify-center items-center overflow-hidden">
- 
         <input
           v-model="userInput"
           type="text"
