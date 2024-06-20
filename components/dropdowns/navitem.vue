@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { useDialogStore } from "@/stores/ui/useDialogStore";
 import { useGloabalState } from "@/stores/ui/useGlobalState";
+import { ref, defineProps } from "vue";
+import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useContentStore } from "@/stores/useContentStore";
+import { getFirestore, doc, setDoc, deleteDoc } from "firebase/firestore";
+
+const db = getFirestore();
 
 const globalStateStore = useGloabalState();
 const { isMobileNavOpen } = storeToRefs(globalStateStore);
@@ -25,6 +32,7 @@ const props = defineProps({
 });
 const showElement = ref<boolean>(false);
 const route = useRoute();
+const sessionName = ref<string>(props.sessions.sesionName);
 const toggleElement = (): void => {
   showElement.value = !showElement.value;
   if (route.path !== "/contentai") {
@@ -63,29 +71,57 @@ const openSession = (sessionIndex) => {
   selectedSession.value = sessions.value[sessionIndex];
   console.log(selectedSession.value);
 };
+
+const updateSessionName = (name: string) => {
+  const docRef = doc(db, "contentCreation", selectedSession.value.id);
+  setDoc(docRef, { sessionName: name }, { merge: true });
+};
+
+const deleteSession = async (sessionId: string) => {
+  const docRef = doc(db, "contentCreation", sessionId);
+  await deleteDoc(docRef);
+};
 </script>
 
 <template>
   <div class="relative select-none">
     <slot />
-    <div class="px-2 flex flex-col gap-2">
+    <transition-group name="fade" tag="div" class="px-2 flex flex-col gap-2">
       <div
         v-for="(session, sessionIndex) in sessions"
+        :key="session.id"
         @click="openSession(sessionIndex), (isMobileNavOpen = false)"
         :class="session.id === selectedSession.id ? 'bg-light-100' : ''"
-        class="group flex justify-between items-center transition-all h-14 px-2 rounded-md hover:bg-light-100 cursor-pointer"
+        class="group flex justify-between items-center transition-all h-14 px-2 rounded-md hover:bg-light-100 cursor-pointer group"
       >
         <div>
-          <p class="transition-all text-small font-normal first-letter:uppercase">{{ session.sessionName }}</p>
+          <input
+            @change="
+              (event) => {
+                updateSessionName(event.target.value);
+              }
+            "
+            @blur="
+              (event) => {
+                updateSessionName(event.target.value);
+              }
+            "
+            class="transition-all text-small font-normal first-letter:uppercase outline-none bg-white/0 focus:bg-dark-300 hover:bg-dark-300"
+            v-model="session.sessionName"
+          />
           <p
-            class="transition-all text-xsmall text-black dark:text-white dark:group-hover:text-purple-dark group-hover:text-purple-dark"
+            class="transition-all text-xsmall text-black/50 dark:text-white dark:group-hover:text-purple-dark group-hover:text-purple-dark"
           >
             {{ formatDateTime(session.timestamp.toDate()) }}
           </p>
         </div>
-        <NuxtIcon name="Options" class="text-p" />
+        <NuxtIcon
+          name="Trash"
+          class="transition-all text-small opacity-0 group-hover:opacity-100 text-red"
+          @click="deleteSession(session.id)"
+        />
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -116,5 +152,25 @@ const openSession = (sessionIndex) => {
   border-color: #222222;
   background-color: #161616;
 }
+
+.fade-enter-active,
+.fade-appear-active {
+  transition: opacity 0.2s, transform 0.4s;
+  transform: translate(0px, -20px); /* Start from top-right */
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-appear-to {
+  transform: translate(0, 0); /* End at element's original position */
+  opacity: 1;
+}
+.fade-leave-active {
+  transition: opacity 0.2s, transform 0.4s;
+  transform: translate(0, 0); /* Start at element's original position */
+  opacity: 1;
+}
+.fade-leave-to {
+  transform: translate(0px, -20px); /* End at bottom-left */
+  opacity: 0;
+}
 </style>
-~/stores/useContentStore
