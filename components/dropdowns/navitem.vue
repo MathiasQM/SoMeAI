@@ -117,4 +117,3 @@ const openSession = (sessionIndex) => {
   background-color: #161616;
 }
 </style>
-~/stores/useContentStore
