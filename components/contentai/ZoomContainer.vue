@@ -9,11 +9,10 @@
     @mousemove="handleMouseMove"
     style="overflow: hidden; position: relative; width: 100%; height: 100%"
   >
-    <div @click="stopZoomAndDrag = true" :style="contentStyle" class="flex gap-5 items-center">
+    <div :style="contentStyle" class="content">
+      {{ musx }} {{ musy }}
       <slot name="zoomable"></slot>
     </div>
-
-    <!-- <slot name="static"></slot> -->
 
     <button
       v-if="isTransformed"
@@ -26,8 +25,19 @@
 </template>
 
 <script setup>
+import { ref, computed, watch } from "vue";
+import { useContentStore } from "@/stores/useContentStore";
+import { storeToRefs } from "pinia";
+
 const contentStore = useContentStore();
 const { stopZoomAndDrag } = storeToRefs(contentStore);
+
+const props = defineProps({
+  itemCount: {
+    type: Number,
+    required: true,
+  },
+});
 
 const container = ref(null);
 const scale = ref(1);
@@ -42,6 +52,44 @@ const friction = 0.9; // Adjust for "slower" or "faster" deceleration
 
 let momentumId;
 
+// Scale mapping based on item count
+const scaleMapping = {
+  0: 1,
+  1: 1,
+  2: 0.9,
+  3: 0.75,
+  4: 0.75,
+};
+
+function getScaleForItemCount(count) {
+  return scaleMapping[count] !== undefined ? scaleMapping[count] : 0.5;
+}
+
+// Adjust the zoom based on the number of items
+const computedScale = computed(() => {
+  return getScaleForItemCount(props.itemCount);
+});
+
+watch(computedScale, (newScale) => {
+  scale.value = newScale;
+  centerContent();
+});
+
+watch(
+  () => props.itemCount,
+  () => {
+    scale.value = computedScale.value;
+    centerContent();
+  }
+);
+
+function centerContent() {
+  const rect = container.value.getBoundingClientRect();
+  offsetX.value = 0;
+  offsetY.value = 0;
+  updateContentStyle();
+}
+
 function handleScroll(event) {
   if (stopZoomAndDrag.value) return;
   const zoomIntensity = 0.1;
@@ -53,8 +101,9 @@ function handleScroll(event) {
     const mouseX = event.clientX - rect.left;
     const mouseY = event.clientY - rect.top;
     const ratio = newScale / scale.value;
-    offsetX.value += (mouseX - offsetX.value) * (1 - ratio);
-    offsetY.value += (mouseY - offsetY.value) * (1 - ratio);
+
+    offsetX.value = mouseX - (mouseX - offsetX.value) * ratio;
+    offsetY.value = mouseY - (mouseY - offsetY.value) * ratio;
     scale.value = newScale;
     updateContentStyle();
   }
@@ -95,17 +144,16 @@ function handleMouseUp() {
 function updateContentStyle() {
   contentStyle.value = {
     transform: `translate(${offsetX.value}px, ${offsetY.value}px) scale(${scale.value})`,
-    transformOrigin: "0 0",
+    transformOrigin: "center center", // Ensure the content scales from the center
   };
 }
 
 function resetTransform() {
-  scale.value = 1;
-  offsetX.value = 0;
-  offsetY.value = 0;
+  scale.value = computedScale.value;
+  centerContent();
   contentStyle.value = {
     ...contentStyle.value,
-    transform: `translate(0px, 0px) scale(1)`,
+    transform: `translate(${offsetX.value}px, ${offsetY.value}px) scale(${scale.value})`,
     transition: "transform 0.5s ease-out", // Smooth transition back to default
   };
 
@@ -151,4 +199,3 @@ function startMomentum() {
   z-index: 100;
 }
 </style>
-~/stores/useContentStore

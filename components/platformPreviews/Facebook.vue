@@ -17,6 +17,7 @@ const props = defineProps({
     iseditable: Boolean,
     default: false,
   },
+  startAnimation: Boolean,
 });
 
 // Use refs for reactive DOM elements
@@ -92,10 +93,14 @@ watch(
   },
   { deep: true, immediate: true }
 );
+const test = ref(false);
+setTimeout(() => {
+  test.value = true;
+}, 1000);
 </script>
 
 <template>
-  <div class="overflow-hidden bg-white rounded-lg border border-creme p-2 shadow-lg cursor-pointer">
+  <div class="overflow-hidden rounded-lg border border-creme p-2 shadow-lg cursor-pointer">
     <div
       :class="isEditable ? 'overflow-y-auto' : 'overflow-hidden'"
       class="scrollbarContainer overflow-x-hidden flex flex-col w-[400px] max-h-[72vh]"

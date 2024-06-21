@@ -7,6 +7,7 @@ import PlatformPreviewsX from "~/components/platformPreviews/X.vue";
 
 const props = defineProps({
   result: Object,
+  startAnimation: Boolean,
 });
 
 const emit = defineEmits(["openEditor"]);
@@ -28,17 +29,25 @@ const getComponentForChannel = (channel) => {
 const openEditor = () => {
   emit("openEditor");
 };
+
+const test = ref(false);
+setTimeout(() => {
+  test.value = true;
+}, 1000);
 </script>
 
 <template>
-  <div class="relative group flex gap-5">
-    <component
-      :is="getComponentForChannel(result.channel)"
-      :result="result"
-      class="transition-all border group-hover:border-purple-400"
-    />
+  <div class="relative group flex">
+    <transition name="fade">
+      <component
+        v-show="test"
+        :is="getComponentForChannel(result.channel)"
+        :result="result"
+        class="transition-all bg-white border group-hover:border-purple-400"
+      />
+    </transition>
     <div
-      class="relative flex flex-col gap-5 overflow-hidden transition-all duration-300 ease-in-out w-0 group-hover:w-[100px] group-hover:py-2 opacity-0 group-hover:opacity-100"
+      class="relative flex flex-col gap-5 overflow-hidden ml-[10px] transition-all duration-300 ease-in-out w-0 group-hover:w-[100px] group-hover:py-2 opacity-0 group-hover:opacity-100"
     >
       <button
         @click="openEditor()"
@@ -54,3 +63,20 @@ const openEditor = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.7s ease;
+}
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

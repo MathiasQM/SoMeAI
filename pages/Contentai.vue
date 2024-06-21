@@ -22,23 +22,29 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
     </div>
 
     <div class="flex items-start gap-5 w-full h-full relative">
-      <!-- <ContentaiZoomContainer>
-          <template v-slot:zoomable> -->
-      <TransitionGroup
-        v-show="selectedSession !== ''"
-        tag="div"
-        class="flex items-center gap-5 w-full h-full relative overflow-x-hidden"
-      >
-        <div
-          v-for="(result, i) in selectedSessionResults"
-          :key="result.id"
-          class="w-full flex justify-center items-center h-full fade-item"
-        >
-          <PlatformPreviewsWrapper :result="result" @openEditor="openEditor(i)" />
-        </div>
-      </TransitionGroup>
-      <!-- </template>
-    </ContentaiZoomContainer> -->
+      <ContentaiZoomContainer :itemCount="selectedSessionResults.length">
+        <template v-slot:zoomable>
+          <TransitionGroup
+            v-show="selectedSession !== ''"
+            tag="div"
+            class="flex items-center justify-center flex-wrap gap-5 relative overflow-x-hidden"
+            name="fade"
+            :style="{ width: `${350 * selectedSessionResults.length + 300}px` }"
+          >
+            <div
+              v-for="(result, i) in selectedSessionResults"
+              :key="result.id"
+              class="flex justify-center items-center w-auto h-auto fade-item"
+            >
+              <PlatformPreviewsWrapper
+                :startAnimation="result.id ? true : false"
+                :result="result"
+                @openEditor="openEditor(i)"
+              />
+            </div>
+          </TransitionGroup>
+        </template>
+      </ContentaiZoomContainer>
       <PlatformPreviewsEditor
         :result="selectedSessionResults[editorIndex]"
         :isEditable="isEditorOpen"
@@ -49,7 +55,7 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
 </template>
 
 <style>
-.v-enter-from {
+/* .v-enter-from {
   opacity: 0;
   rotate: 180deg;
 }
@@ -59,5 +65,5 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
 }
 .v-enter-active {
   transition: all 0.7s;
-}
+} */
 </style>
