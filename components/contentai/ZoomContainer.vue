@@ -10,7 +10,6 @@
     style="overflow: hidden; position: relative; width: 100%; height: 100%"
   >
     <div :style="contentStyle" class="content">
-      {{ musx }} {{ musy }}
       <slot name="zoomable"></slot>
     </div>
 

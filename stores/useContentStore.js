@@ -145,7 +145,9 @@ export const useContentStore = defineStore("useContent", () => {
 
   // Generate Content for the selected channels and persona
   const generateContentForChannel = async (prompt) => {
+    console.log("Generating content for channels:", selectedChannels.value);
     if (!selectedPersona) return console.error("No selected persona");
+    if (!prompt) return console.error("No prompt provided");
     userInput.value = "";
     const requestData = {
       channels: selectedChannels.value,
@@ -172,6 +174,7 @@ export const useContentStore = defineStore("useContent", () => {
   };
 
   const modifyPost = async (channel, prompt, postContent) => {
+    modifiedContent.value = "";
     const requestData = {
       userId: userAuth.value.uid,
       personaDescription: selectedPersona.value.personaDescription,

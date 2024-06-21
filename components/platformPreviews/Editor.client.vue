@@ -109,13 +109,9 @@ onMounted(() => {
     <div class="relative flex flex-col items-center justify-center gap-5 w-full h-full">
       <div class="w-full flex justify-center">
         <component :is="getComponentForChannel(result.channel)" :result="result" :isEditable="isEditable" />
-        <component
-          v-if="modifiedContent"
-          :is="getComponentForChannel(result.channel)"
-          :modifiedContent="modifiedContent ? true : false"
-          :result="modifiedContent"
-          :isEditable="false"
-        />
+        <div class="bg-white w-96">
+          {{ modifiedContent }}
+        </div>
       </div>
       <div class="relative flex w-[400px] justify-center items-center overflow-hidden">
         <input

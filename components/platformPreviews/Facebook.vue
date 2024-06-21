@@ -17,6 +17,7 @@ const props = defineProps({
     iseditable: Boolean,
     default: false,
   },
+  isContentModified: Boolean,
   startAnimation: Boolean,
 });
 
@@ -85,10 +86,14 @@ watch(
   () => props.result,
   (newValue) => {
     if (newValue.content) {
-      // Sanitize the HTML content to prevent XSS attacks
-      const safeContent = DOMPurify.sanitize(newValue.content);
-      //   quillEditor.value.root.innerHTML = safeContent;
-      content.value = convertLineBreaksToHTML(safeContent);
+      if (props.isContentModified) {
+        content.value = props.result;
+      } else {
+        // Sanitize the HTML content to prevent XSS attacks
+        const safeContent = DOMPurify.sanitize(newValue.content);
+        //   quillEditor.value.root.innerHTML = safeContent;
+        content.value = convertLineBreaksToHTML(safeContent);
+      }
     }
   },
   { deep: true, immediate: true }
@@ -100,7 +105,7 @@ setTimeout(() => {
 </script>
 
 <template>
-  <div class="overflow-hidden rounded-lg border border-creme p-2 shadow-lg cursor-pointer">
+  <div class="overflow-hidden rounded-lg bg-white border border-creme p-2 shadow-lg cursor-pointer">
     <div
       :class="isEditable ? 'overflow-y-auto' : 'overflow-hidden'"
       class="scrollbarContainer overflow-x-hidden flex flex-col w-[400px] max-h-[72vh]"
