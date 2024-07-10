@@ -45,50 +45,50 @@ onMounted(() => {
       userProvidedData.value = {
         userId: user.uid,
         websiteSummary: `
-          - Purpose: To promote a holistic approach to health that balances physical and mental well-being.
-          - USP: Provides education and mentoring in flexible health practices, emphasizing enjoyment and sustainability over restrictive diets and punitive exercise routines.
-          - Target Audience: Individuals seeking sustainable lifestyle changes, with a focus on mental and physical health integration.
-          - Core Offerings:
-          - Health education programs
-          - Mentorship in food psychology and sustainable health practices
-          - Workshops and seminars on balanced living
-          - Community support for lifestyle changes
+          Purpose:
+
+To help independent coaches, mentors, and therapists achieve client flow and job satisfaction by combining business strategy with personal well-being.
+USP:
+
+Offers a unique blend of business strategy and personal well-being techniques rooted in psychology, sociology, and physiology to help practitioners thrive both professionally and personally.
+Target Audience:
+
+Independent coaches, mentors, and therapists who work with private clients and seek to create a meaningful and balanced professional life.
+Core Offerings:
+
+Step-by-step plans to attract and convert clients.
+Strategies to develop and grow a business.
+Training on enhancing mental well-being, physical health, and work-life balance.
           `,
         postsSummary: `
-          1. Post 1: "Hvis bare jeg kunne blive fri for at sælge..."
-              - Challenges: Discomfort with sales; difficulty in attracting new clients without traditional sales tactics.
-              - Solutions: Focus on how you can help clients achieve their goals; be curious about their dreams and desires.
-              - Tone: Encouraging, empathetic, supportive.
+          Tone:
 
-          2. Post 2: "Træning og straf - en usund sammenhæng"
-              - Challenges: Unhealthy associations between exercise, food, and punishment; difficulty in finding pleasure in healthy activities.
-              - Solutions: Emphasize enjoyment in food and movement; promote sustainable lifestyle changes through pleasurable activities.
-              - Tone: Reflective, inspirational, community-oriented.
+Motivational and empathetic, addressing personal struggles and aspirations.
+Point of View:
 
-          3. Post 3: "Den Holistiske Sundhedstilgang"
-              - Challenges: Overemphasis on physical health at the expense of mental health; cycles of dieting and overeating.
-              - Solutions: Promote a holistic approach to health; integrate physical, mental, and social well-being.
-              - Tone: Thought-provoking, informative, revolutionary.
+First-person perspective, sharing a personal story to connect with the audience emotionally.
+Writing Style:
 
-          4. Post 4: "Lærdom fra en pizzadej"
-              - Challenges: Overcoming initial failures in new endeavors; maintaining motivation and focus.
-              - Solutions: Embrace the learning process; seek external help when needed; celebrate small victories.
-              - Tone: Relatable, motivational, insightful.
+Conversational and informal, making use of rhetorical questions and direct address to the reader.
+Includes personal anecdotes and experiences to illustrate points.
+Emoji Use:
 
-          5. Post 5: "Modgang og succes i virksomhedens verden"
-              - Challenges: Dealing with periods of low client influx; avoiding the temptation of quick fixes.
-              - Solutions: Focus on core strengths and unique offerings; maintain resilience during tough times.
-              - Tone: Honest, resilient, strategic.
+Frequent use of emojis to convey emotions and emphasize key points (e.g., 🔥, ❤️, 🤸‍♀️, 🫶).
+Anecdotes and Personal Stories:
 
-          6. Post 6: "Oplad dit mindset"
-              - Challenges: Maintaining a positive and productive mindset.
-              - Solutions: Provide reminders and support to boost positivity and productivity.
-              - Tone: Uplifting, supportive, energizing.
+The post is centered around a personal story of overcoming self-doubt and making a life-changing decision to pursue a dream, despite obstacles.
+Post Length:
 
-          7. Post 7: "Du sælger forandring"
-              - Challenges: Competing with traditional sales tactics and consumer goods.
-              - Solutions: Emphasize the value of transformational services; price services according to their true value.
-              - Tone: Empowering, proud, assertive.
+Medium-length, enough to tell a compelling story without overwhelming the reader.
+Sentence Length:
+
+Varies between short, impactful sentences and longer, descriptive sentences to maintain engagement and highlight key messages.
+Formality:
+
+Informal and approachable, aiming to create a personal connection with the reader.
+Overall Summary:
+
+The post is an encouraging and relatable message urging readers to follow their dreams and make decisions that feel right for them, regardless of external pressures. It emphasizes the importance of self-fulfillment and personal happiness, using a blend of personal experience, emotional appeal, and motivational language to inspire action.
           `,
       };
     }

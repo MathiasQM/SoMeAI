@@ -21,7 +21,7 @@ const { selectedSessionResults, selectedSession, userInput, stopZoomAndDrag } = 
       </div>
     </div>
 
-    <div class="flex items-start gap-5 w-full h-full relative">
+    <div v-else class="flex items-start gap-5 w-full h-full relative">
       <ContentaiZoomContainer :itemCount="selectedSessionResults.length">
         <template v-slot:zoomable>
           <TransitionGroup

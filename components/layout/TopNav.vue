@@ -49,7 +49,7 @@ const showContentTools = computed(() => {
 
 <template>
   <div
-    v-if="true"
+    v-if="isEditorNav"
     class="absolute z-10 mx-5 mt-2 w-[calc(100vw-70px)] md:w-[calc(100%-40px)] h-[70px] rounded-md px-5 flex items-center justify-between"
   >
     <template v-if="isEditorNav">
@@ -73,7 +73,7 @@ const showContentTools = computed(() => {
       </div>
       <!-- TODO: Implement logic to change view -->
       <div v-if="showContentTools && selectedSession !== ''" class="w-1/3 flex justify-center">
-        <div
+        <!-- <div
           :class="showContentTools && selectedSession !== '' ? 'opacity-1' : 'opacity-0'"
           class="group transition-all bg-white w-32 h-10 rounded-lg border border-creme flex items-center justify-around relative z-10 p-1 py-2"
         >
@@ -93,7 +93,7 @@ const showContentTools = computed(() => {
           <div class="absolute top-10 w-44 group-hover:flex bg-darkgrey rounded-lg justify-center text-white hidden">
             <p class="text-center">Hardcoded content</p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="flex items-center justify-end gap-5 text-lightgrey w-1/3">

@@ -20,15 +20,14 @@ export const onIntegrationCreateOrUpdate = functions.firestore
 
     if (!beforeData) {
       // Document was created
-      // Generate persona description
       let userPostDescription, systemPostDescription;
-      if (afterData.userSuppliedPosts.length > 0) {
-        userPostDescription = await generatePostDescription(afterData.userSuppliedPosts);
+      if (afterData.userSuppliedPost) {
+        userPostDescription = await generatePostDescription(afterData.userSuppliedPost);
         await db.collection("Personas").doc(personaId).collection("Integrations").doc(integrationId).update({
-          userSuppliedPostsDescription: userPostDescription,
+          userSuppliedPostDescription: userPostDescription,
         });
       }
-      if (afterData.userSuppliedPosts.length > 0) {
+      if (afterData.userSuppliedPost) {
         systemPostDescription = await generatePostDescription(afterData.systemSelectedPosts);
         // Update the document with the generated description
         await db.collection("Personas").doc(personaId).collection("Integrations").doc(integrationId).update({
@@ -41,7 +40,7 @@ export const onIntegrationCreateOrUpdate = functions.firestore
     } else {
       // Document was updated
       if (
-        (beforeData.userSuppliedPostsDescription !== afterData.userSuppliedPostsDescription &&
+        (beforeData.userSuppliedPostDescription !== afterData.userSuppliedPostDescription &&
           !("lastUpdatedByFunction" in beforeData)) ||
         (beforeData.systemSelectedPostDescription !== afterData.systemSelectedPostDescription &&
           !("lastUpdatedByFunction" in beforeData))
@@ -51,15 +50,15 @@ export const onIntegrationCreateOrUpdate = functions.firestore
       }
 
       let userPostDescription, systemPostDescription;
-      if (afterData.userSuppliedPosts.length > 0) {
+      if (afterData.userSuppliedPost) {
         delete afterData.userSuppliedPostsDescription;
-        userPostDescription = await generatePostDescription(afterData.userSuppliedPosts);
+        userPostDescription = await generatePostDescription(afterData.userSuppliedPost);
         await db.collection("Personas").doc(personaId).collection("Integrations").doc(integrationId).update({
-          userSuppliedPostsDescription: userPostDescription,
+          userSuppliedPostDescription: userPostDescription,
         });
       }
 
-      if (afterData.userSuppliedPosts.length > 0) {
+      if (afterData.userSuppliedPost) {
         delete afterData.systemSelectedPostDescription;
         systemPostDescription = await generatePostDescription(afterData.systemSelectedPosts);
         // Update the document with the generated description
@@ -71,22 +70,22 @@ export const onIntegrationCreateOrUpdate = functions.firestore
   });
 
 // Function to construct persona description using OpenAI API
-async function generatePostDescription(posts) {
-  let postContent = [];
+async function generatePostDescription(post) {
+  // let postContent = [];
 
-  for (let i = 0; i < posts.length; i++) {
-    const post = posts[i];
-    postContent.push(post.content);
-  }
+  // for (let i = 0; i < posts.length; i++) {
+  //   const post = posts[i];
+  //   postContent.push(post.content);
+  // }
 
   const systemPrompt = `
   You are an expert at identifying characteristics in content like; tone, jargon, writingstyle, point of view, emojiuse and much more. Given the following post data, create a detailed and natural language description. It is important that no aspect of the data is left out.
 
-  Persona Data:
-  ${postContent}
+  Post:
+  ${post}
   `;
 
-  const userPrompt = "Generate a natural language description based on the above post data.";
+  const userPrompt = "Describe in natural language how to write text/content that is similar to the post above.";
 
   try {
     const completion = await openai.chat.completions.create({

@@ -14,11 +14,10 @@
     </div>
 
     <button
-      v-if="isTransformed"
       @click="resetTransform"
-      class="reset-button bg-white py-2 px-2 rounded-md text-purple-dark text-psmall border border-white hover:border-purple-dark transition-all"
+      class="reset-button bg-white py-2 px-2 rounded-md text-purple-dark text-xsmall border border-light-100 hover:border-purple-dark transition-all"
     >
-      Reset
+      Re-center
     </button>
   </div>
 </template>
@@ -43,7 +42,6 @@ const scale = ref(1);
 const offsetX = ref(0);
 const offsetY = ref(0);
 const isMouseDown = ref(false);
-const isTransformed = computed(() => scale.value !== 1 || offsetX.value !== 0 || offsetY.value !== 0);
 const lastMousePosition = ref({ x: 0, y: 0 });
 const velocity = ref({ x: 0, y: 0 });
 const contentStyle = ref({});
@@ -193,8 +191,8 @@ function startMomentum() {
 
 .reset-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 2%;
+  left: 20px;
   z-index: 100;
 }
 </style>

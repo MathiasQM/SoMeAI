@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   return new Promise<void>((resolve, reject) => {
     corsHandler(req, res, async () => {
       try {
-        const { channels, prompt, persona, contentName } = await readBody(event);
+        const { channels, prompt, options, persona, contentName } = await readBody(event);
         const userId = persona.userId;
         const userDocRef = db.collection("contentCreation").doc();
         const personaDescription = persona.personaDescription;
@@ -94,7 +94,9 @@ const handleChannelRequest = async (
       ],
     });
 
-    console.log(`Success for ${channel}`);
+    console.log(`System prompt: ${formattedRequest.systemPrompt}`);
+
+    console.log(`User prompt: ${formattedRequest.userPrompt}`);
 
     let aiResponse;
     try {
@@ -131,10 +133,10 @@ async function formatRequestForChannel(channel: string, persona: any, personaDes
       formattedRequest = await formatForLinkedin(persona, personaDescription, prompt);
       break;
     case "Threads":
-    formattedRequest = await formatForThreads(persona, personaDescription, prompt);
+      formattedRequest = await formatForThreads(persona, personaDescription, prompt);
       break;
     case "X":
-    formattedRequest = await formatForX(persona, personaDescription, prompt);
+      formattedRequest = await formatForX(persona, personaDescription, prompt);
       break;
     default:
       throw new Error("Unsupported channel: " + channel);

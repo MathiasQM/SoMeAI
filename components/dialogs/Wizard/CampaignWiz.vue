@@ -31,14 +31,16 @@ const contentSuggestions = ref([
     description:
       "Dive into the world of technology, where coding meets creativity, shaping the next generation of digital wonders.",
   },
-  // {
-  //   title: 'A Culinary Adventure',
-  //   description: 'Embark on a gastronomic journey that celebrates global cuisines, uncovering the stories behind the flavors that unite us.',
-  // },
-  // {
-  //   title: 'Pioneering Sustainable Living',
-  //   description: 'Discover the innovations and lifestyle changes leading the charge towards a sustainable future for our planet.',
-  // }
+  {
+    title: "A Culinary Adventure",
+    description:
+      "Embark on a gastronomic journey that celebrates global cuisines, uncovering the stories behind the flavors that unite us.",
+  },
+  {
+    title: "Pioneering Sustainable Living",
+    description:
+      "Discover the innovations and lifestyle changes leading the charge towards a sustainable future for our planet.",
+  },
 ]);
 </script>
 
@@ -69,7 +71,7 @@ const contentSuggestions = ref([
     </div>
     <div class="flex flex-wrap justify-evenly gap-2">
       <div
-        class="group transition-all border border-creme hover:bg-creme rounded-lg p-2 flex flex-col justify-center w-[calc(50%-4px)] cursor-pointer relative"
+        class="group transition-all border border-creme bg-white hover:bg-creme rounded-lg p-2 h-20 flex flex-col justify-center w-[calc(50%-4px)] cursor-pointer relative"
         v-for="suggestion in contentSuggestions"
         :key="suggestion.id"
       >
@@ -79,16 +81,15 @@ const contentSuggestions = ref([
           name="ArrowUp"
           class="transition-all flex items-center justify-center absolute hover:scale-105 cursor-pointer right-0 bg-creme group-hover:bg-purple-dark w-6 h-6 text-white text-2xl pt-1 rounded-lg mr-5"
         />
-        <div class="absolute top-10 w-44 group-hover:flex bg-darkgrey rounded-lg justify-center text-white hidden">
-          <p class="text-center">Hardcoded content</p>
-        </div>
       </div>
-      <button class="group transition-all bg-creme py-1 px-2 mt-2 rounded-md hover:bg-purple-dark hover:text-white">
+      <NuxtIcon
+        name="Refresh"
+        filled
+        class="relative cursor-pointer hover:text-purple-500 text-2xl transition-all w-10 h-10 flex items-center justify-center bg-white border border-white hover:border-purple-500 py-1 px-2 mt-2 rounded-md"
+      >
         Suggest new
-        <div class="relative top-10 w-44 group-hover:flex bg-darkgrey rounded-lg justify-center text-white hidden">
-          <p class="text-center">Hardcoded content</p>
-        </div>
-      </button>
+      </NuxtIcon>
+      <ContentaiPromptInput />
     </div>
   </div>
 </template>

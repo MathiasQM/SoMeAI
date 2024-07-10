@@ -46,7 +46,7 @@ const route = useRoute();
         <UiLargeLoader />
       </div>
     </div>
-    <ContentaiPromptInput />
+    <!-- <ContentaiPromptInput /> -->
   </div>
 </template>
 

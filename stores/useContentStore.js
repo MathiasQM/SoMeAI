@@ -144,17 +144,26 @@ export const useContentStore = defineStore("useContent", () => {
   };
 
   // Generate Content for the selected channels and persona
-  const generateContentForChannel = async (prompt) => {
-    console.log("Generating content for channels:", selectedChannels.value);
+  const generateContentForChannel = async (prompt, options) => {
     if (!selectedPersona) return console.error("No selected persona");
     if (!prompt) return console.error("No prompt provided");
     userInput.value = "";
     const requestData = {
       channels: selectedChannels.value,
       prompt,
+      options,
       persona: selectedPersona.value,
       contentName: newContentName.value,
     };
+
+    // Remove unnecessary fields based on the purpose of the content
+    // to prevent creating promotional content for purely informational or engagement purposeses
+    if (!options["purpose"].includes("Promote") && !options["purpose"].includes("Inform")) {
+      delete requestData.persona.website;
+      delete requestData.persona.website;
+      delete requestData.persona.contentPreferences;
+      delete requestData.persona.brandAnalysis.coreOfferings;
+    }
 
     try {
       const { success, data, error } = await useFetch("/api/users/content/generate", {
